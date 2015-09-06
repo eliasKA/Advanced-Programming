@@ -1,7 +1,6 @@
 package Assignment1;
 
 /**
- * 
  * @author 
  * 	Alae & Elias
  * @elements
