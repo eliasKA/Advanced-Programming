@@ -83,4 +83,6 @@ public interface IdentifierCollectionInterface {
 	void removeIdentifier(Identifier id);
 	
 	IdentifierCollection union(IdentifierCollection identifierCollection) throws Exception;
+	IdentifierCollection intersection(IdentifierCollection identifierCollection) throws Exception;
+	IdentifierCollection difference(IdentifierCollection identifierCollection) throws Exception;
 }
