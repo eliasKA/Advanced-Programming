@@ -22,7 +22,7 @@ public class Main {
 		collectionRow = new IdentifierCollectionRow(MAX_COLLECTIONS);
 	}
 	
-	private void start(){
+	private void start() throws Exception{
 		IdentifierCollection newCollection = new IdentifierCollection();
 		Scanner in = new Scanner(System.in);
 		
@@ -30,6 +30,8 @@ public class Main {
 			newCollection.init();
 			makeNewCollection(i,newCollection,in);
 		}
+		
+		printCollection(collectionRow.getCollectionAtIndex(0).union(collectionRow.getCollectionAtIndex(1)));
 	}
 	
 	private void makeNewCollection(int i, IdentifierCollection idColl, Scanner input){
@@ -97,14 +99,16 @@ public class Main {
 		return (input.hasNext("[0-9]") || input.hasNext("[a-zA-Z]"));
 	}
 	
-	private void printCollection(IdentifierCollection collection){
-		for(int i = 0; i < collection.size(); i++){
-			out.print(collection.getIdentifier().toString() + " - ");
+	private void printCollection(IdentifierCollection collection) throws Exception{
+		int size = collection.size();
+		IdentifierCollection tempCollection = new IdentifierCollection(collection);
+		for(int i = 0; i < size; i++){
+			out.print(tempCollection.getIdentifier().toString() + " - ");
 		}
 		out.println();
 	}
 	
-	public static void main(String[] argv){
+	public static void main(String[] argv) throws Exception{
 		new Main().start();
 	}
 }

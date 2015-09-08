@@ -1,5 +1,7 @@
 package Assignment1;
 
+
+
 public class IdentifierCollection implements IdentifierCollectionInterface{
 
 	private Identifier[] identifierArray;
@@ -13,8 +15,8 @@ public class IdentifierCollection implements IdentifierCollectionInterface{
 	IdentifierCollection(IdentifierCollection ic) throws Exception{
 		identifierArray = new Identifier[MAX_ELEMENTS];
 		numberOfElements = 0;
-		
-		for(int i = 0; i < ic.size(); i++){
+		int size = ic.size();
+		for(int i = 0; i < size; i++){
 			add(ic.getIdentifier());
 		}
 	}
@@ -48,7 +50,7 @@ public class IdentifierCollection implements IdentifierCollectionInterface{
 
 	@Override
 	public Identifier getIdentifier() {
-		Identifier id =  identifierArray[numberOfElements-1];
+		Identifier id =  identifierArray[numberOfElements -1];
 		removeIdentifier(id);
 		return id;
 	}
@@ -69,5 +71,20 @@ public class IdentifierCollection implements IdentifierCollectionInterface{
 		}
 		numberOfElements -= 1;
 	}
+	private void addCollection(IdentifierCollection identifierCollection) throws Exception {
+		for (int i = 0; i < identifierCollection.numberOfElements; i++) {
+			add(identifierCollection.identifierArray[i]);
 
+		}
+
+	}
+@Override
+	public IdentifierCollection union(IdentifierCollection identifierCollection) throws Exception {
+		IdentifierCollection unionCollection = new IdentifierCollection(this);
+		IdentifierCollection secondCollection = new IdentifierCollection(identifierCollection);
+		unionCollection.addCollection(secondCollection);
+
+		return unionCollection;
+
+	}
 }

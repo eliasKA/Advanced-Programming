@@ -82,5 +82,5 @@ public interface IdentifierCollectionInterface {
 	 */
 	void removeIdentifier(Identifier id);
 	
-	
+	IdentifierCollection union(IdentifierCollection identifierCollection) throws Exception;
 }
