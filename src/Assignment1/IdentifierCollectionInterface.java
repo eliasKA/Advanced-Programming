@@ -6,9 +6,8 @@ package Assignment1;
  * @elements
  * 	identifierObjects of type Identifier
  * @structure
- * 	Linear
+ * 	none
  * @domain
- * 	Only identifiers that meet the domain of the object Identifier
  * 	Collection contains 0-20 identifiers
  * @constructor
  * 	IdentifierCollection(); 		
@@ -16,7 +15,7 @@ package Assignment1;
  * 		<dt><b>PRE-condition  -</b><dd>
  * 			-
  * 		<dt><b>POST-condition  -</b><dd> 
- * 			IdentifierCollection object is empty
+ * 			Empty IdentifierCollection object is created
  *	</dl>
  *	<br>
  *	IdentifierCollection(IdentifierCollection src);
@@ -24,13 +23,13 @@ package Assignment1;
  * 		<dt><b>PRE-condition  -</b><dd>
  * 			-
  * 		<dt><b>POST-condition  -</b><dd> 
- * 			IdentifierCollection object contains a copy of src
+ * 			Copy of the IdentifierObject src is created
  *	</dl>
  **/
 
 public interface IdentifierCollectionInterface {
 
-	int MAX_ELEMENTS = 20;
+	static final int MAX_ELEMENTS = 20;
 	
 	/**
 	 * Initializes the IdentifierCollection object to the empty collection
@@ -47,9 +46,10 @@ public interface IdentifierCollectionInterface {
 	 * @precondition
 	 * 	-
 	 * @postcondition
-	 * 	The Identifier object is added to the collection
+	 * 		SUCCES: The Identifier object is added to the collection
+	 * 		FAILURE: An Exception is thrown with the reason why id was not added
 	 **/
-	void add(Identifier id);
+	void add(Identifier id) throws Exception;
 	
 	/**
 	 * Returns the size of the collection
@@ -62,13 +62,25 @@ public interface IdentifierCollectionInterface {
 	int size();
 	
 	/**
-	 * Returns the identifier object at index i 
+	 * Returns an identifier that ha not yet been returned 
 	 * @param i
 	 * @return Identifier object at index i
 	 * @precondition
-	 * 	i < size of the collection && i >= 0
+	 * 	The collection is not empty
 	 * @postcondition
-	 * 	Identifier object at index i is returned
+	 * 	An Identifier object is returned
 	 **/
-	Identifier getIdentifierAtIndex(int i);
+	Identifier getIdentifier();
+	
+	/**
+	 * Removes Identifier id from the collection
+	 * @param id
+	 * @precondition
+	 * 	Identifier id HAS to be one of the elements in the collection
+	 * @postcondition
+	 * 	Identifier id has been removed from the collection
+	 */
+	void removeIdentifier(Identifier id);
+	
+	
 }

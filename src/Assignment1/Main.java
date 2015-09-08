@@ -13,7 +13,7 @@ public class Main {
 									EXC_END_WITH_BRACKET = "ERROR, INPUT MUST END WITH '}'",
 									EXC_EMPTY_INPUT = "",
 									EXC_NON_ALPHANUMERIC_INPUT = "ERROR, NON-ALPHANUMERIC INPUT : ";
-						
+	
 	private PrintStream out; 
 	private IdentifierCollectionRow collectionRow;
 	
@@ -30,16 +30,6 @@ public class Main {
 			newCollection.init();
 			makeNewCollection(i,newCollection,in);
 		}
-		
-		for(int i = 0; i < collectionRow.getCollectionAtIndex(0).size(); i++){
-			out.print(collectionRow.getCollectionAtIndex(0).getIdentifierAtIndex(i).getIdentifier() + " - ");
-			
-		}
-		out.println();
-		for(int i = 0; i < collectionRow.getCollectionAtIndex(1).size(); i++){
-			out.print(collectionRow.getCollectionAtIndex(1).getIdentifierAtIndex(i).getIdentifier() + " - ");
-		}
-		out.println();
 	}
 	
 	private void makeNewCollection(int i, IdentifierCollection idColl, Scanner input){
@@ -87,8 +77,6 @@ public class Main {
 			
 			idColl.add(new Identifier(idString));
 		}
-		
-		lineScanner.close();
 		return idColl;
 	}
 	
@@ -101,13 +89,19 @@ public class Main {
 			}
 			
 			wordScanner.next();
-			wordScanner.close();
 		}
 	}
 
 	private boolean nextCharIsValid(Scanner input){
 		input.useDelimiter("");
 		return (input.hasNext("[0-9]") || input.hasNext("[a-zA-Z]"));
+	}
+	
+	private void printCollection(IdentifierCollection collection){
+		for(int i = 0; i < collection.size(); i++){
+			out.print(collection.getIdentifier().toString() + " - ");
+		}
+		out.println();
 	}
 	
 	public static void main(String[] argv){
