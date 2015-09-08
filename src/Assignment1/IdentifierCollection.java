@@ -27,9 +27,19 @@ public class IdentifierCollection implements IdentifierCollectionInterface{
 		if(numberOfElements >= MAX_ELEMENTS){
 			throw new Exception("MAX AMOUNT OF ELEMENTS EXCEEDED");
 		}
-		
-		identifierArray[numberOfElements] = id;
-		numberOfElements += 1;
+		if(!isDuplicate(id)){
+			identifierArray[numberOfElements] = id;
+			numberOfElements += 1;
+		}
+	}
+	
+	private boolean isDuplicate(Identifier id){
+		for(int i = 0; i < numberOfElements; i++){
+			if(identifierArray[i].isEqualTo(id)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public int size() {
