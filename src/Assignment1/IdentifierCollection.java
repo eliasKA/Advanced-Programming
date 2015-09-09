@@ -103,7 +103,13 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 	@Override
 	public IdentifierCollection difference(IdentifierCollection identifierCollection) throws Exception {
 		
-		return null;
+		IdentifierCollection differenceCollection = new IdentifierCollection(this);
+		IdentifierCollection secondCollection = new IdentifierCollection(identifierCollection);
+		for(int i =0;i<secondCollection.numberOfElements;i++){
+			if(differenceCollection.isDuplicate(secondCollection.identifierArray[i])){
+			   differenceCollection.removeIdentifier(secondCollection.identifierArray[i]);	
+			}
+		}
+		return differenceCollection;
 	}
-	
 }

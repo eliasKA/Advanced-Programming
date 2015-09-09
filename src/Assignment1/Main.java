@@ -30,10 +30,9 @@ public class Main {
 		}
 		IdentifierCollection firstCollection = new IdentifierCollection(collectionRow.getCollectionAtIndex(0));
 		IdentifierCollection secondCollection = new IdentifierCollection(collectionRow.getCollectionAtIndex(1));
-		printCollection(firstCollection.union(secondCollection));
-		// firstCollection = new IdentifierCollection(collectionRow.getCollectionAtIndex(0));
-		// secondCollection = new IdentifierCollection(collectionRow.getCollectionAtIndex(1));
-		printCollection(firstCollection.intersection(secondCollection));
+		//printCollection(firstCollection.union(secondCollection));
+		//printCollection(firstCollection.intersection(secondCollection));
+		printCollection(firstCollection.difference(secondCollection));
 	}
 
 	private void makeNewCollection(int i, IdentifierCollection idColl, Scanner input) {
