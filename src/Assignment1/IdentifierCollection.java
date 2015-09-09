@@ -6,21 +6,21 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 	private int numberOfElements;
 
 	IdentifierCollection() {
-		identifierArray = new Identifier[MAX_ELEMENTS];
-		numberOfElements = 0;
+		init();
 	}
 
-	IdentifierCollection(IdentifierCollection ic) throws Exception {
-		identifierArray = new Identifier[MAX_ELEMENTS];
-		numberOfElements = 0;
-		int size = ic.size();
+	IdentifierCollection(IdentifierCollection srcCollection) throws Exception {
+		init();
+		
+		int size = srcCollection.size();
 		for (int i = 0; i < size; i++) {
-			add(ic.getIdentifier());
+			add(srcCollection.identifierArray[i]);
 		}
 	}
 
 	public void init() {
 		identifierArray = new Identifier[MAX_ELEMENTS];
+		numberOfElements = 0;
 	}
 
 	public void add(Identifier id) throws Exception {
@@ -29,7 +29,7 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 		}
 		if (!isDuplicate(id)) {
 			identifierArray[numberOfElements] = id;
-			numberOfElements += 1;
+			numberOfElements += 1;	
 		}
 	}
 
@@ -46,16 +46,13 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 		return numberOfElements;
 	}
 
-	@Override
 	public Identifier getIdentifier() {
-		Identifier id = identifierArray[numberOfElements - 1];
-		removeIdentifier(id);
+		Identifier id = identifierArray[0];
+		removeIdentifierAtIndex(0);
 		return id;
 	}
 
-	@Override
 	public void removeIdentifier(Identifier id) {
-		// TODO Auto-generated method stub
 		for (int i = 0; i < numberOfElements; i++) {
 			if (identifierArray[i].isEqualTo(id)) {
 				removeIdentifierAtIndex(i);
@@ -73,9 +70,7 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 	private void addCollection(IdentifierCollection identifierCollection) throws Exception {
 		for (int i = 0; i < identifierCollection.numberOfElements; i++) {
 			add(identifierCollection.identifierArray[i]);
-
 		}
-
 	}
 
 	@Override
@@ -93,7 +88,7 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 		IdentifierCollection intersectionCollection = new IdentifierCollection();
 		IdentifierCollection secondCollection = new IdentifierCollection(identifierCollection);
 		for (int i = 0; i < secondCollection.numberOfElements; i++) {
-			if (isDuplicate(secondCollection.identifierArray[i])) {
+			if(isDuplicate(secondCollection.identifierArray[i])) {
 				intersectionCollection.add(secondCollection.identifierArray[i]);
 			}
 		}
@@ -115,7 +110,6 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 
 	@Override
 	public IdentifierCollection symmetricDifference(IdentifierCollection identifierCollection) throws Exception {
-
 		IdentifierCollection unionCollection = union(identifierCollection);
 		IdentifierCollection intersectionCollection =intersection(identifierCollection);
 		IdentifierCollection symDifferenceCollection = unionCollection.difference(intersectionCollection);
