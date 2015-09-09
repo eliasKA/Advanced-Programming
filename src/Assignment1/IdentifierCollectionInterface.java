@@ -85,4 +85,5 @@ public interface IdentifierCollectionInterface {
 	IdentifierCollection union(IdentifierCollection identifierCollection) throws Exception;
 	IdentifierCollection intersection(IdentifierCollection identifierCollection) throws Exception;
 	IdentifierCollection difference(IdentifierCollection identifierCollection) throws Exception;
+	IdentifierCollection symmetricDifference(IdentifierCollection identifierCollection) throws Exception;
 }

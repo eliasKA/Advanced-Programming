@@ -33,6 +33,7 @@ public class Main {
 		//printCollection(firstCollection.union(secondCollection));
 		//printCollection(firstCollection.intersection(secondCollection));
 		printCollection(firstCollection.difference(secondCollection));
+		//printCollection(firstCollection.symmetricDifference(secondCollection));
 	}
 
 	private void makeNewCollection(int i, IdentifierCollection idColl, Scanner input) {
