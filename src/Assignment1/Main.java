@@ -22,8 +22,6 @@ public class Main {
 								MSG_INTERSECTION = "Intersection:\t\t",
 								MSG_SYMMETRICDIFFERENCE = "Symmetric difference:\t";
 	
-	private static final char 	CTRL_Z = 26;
-	
 	private PrintStream out;
 	private IdentifierCollectionRow collectionRow;
 
@@ -67,25 +65,26 @@ public class Main {
 			}
 
 			executeCollectionOperations();
+			out.println();
 		}
-
 	}
 
 	private void makeNewCollection(int i, IdentifierCollection idColl, Scanner input) {
 		String inputLine;
+		
+		//if(!input.hasNextLine()){
+		//	out.println("");
+		//}
+		
 		try {
 			out.printf(MSG_GIVE_COLLECTION_NU, i + 1);
 			inputLine = input.nextLine();
 			processLine(inputLine, idColl);
 		} catch (Exception e) {
 			out.println(e.getMessage());
-			
-			if(e.getMessage().equals(EXC_END_PROGRAM)){
-				System.exit(1);
-			}
-			
 			makeNewCollection(i, idColl, input);
 		}
+		
 	}
 
 	private void processLine(String line, IdentifierCollection idColl) throws Exception {

@@ -77,8 +77,8 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 	public IdentifierCollection union(IdentifierCollection identifierCollection) throws Exception {
 
 		IdentifierCollection unionCollection = new IdentifierCollection(this);
-		IdentifierCollection secondCollection = new IdentifierCollection(identifierCollection);
-		unionCollection.addCollection(secondCollection);
+		//IdentifierCollection secondCollection = new IdentifierCollection(identifierCollection);
+		unionCollection.addCollection(identifierCollection);
 		return unionCollection;
 	}
 
@@ -86,10 +86,10 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 	public IdentifierCollection intersection(IdentifierCollection identifierCollection) throws Exception {
 
 		IdentifierCollection intersectionCollection = new IdentifierCollection();
-		IdentifierCollection secondCollection = new IdentifierCollection(identifierCollection);
-		for (int i = 0; i < secondCollection.numberOfElements; i++) {
-			if(isDuplicate(secondCollection.identifierArray[i])) {
-				intersectionCollection.add(secondCollection.identifierArray[i]);
+		//IdentifierCollection secondCollection = new IdentifierCollection(identifierCollection);
+		for (int i = 0; i < identifierCollection.numberOfElements; i++) {
+			if(isDuplicate(identifierCollection.identifierArray[i])) {
+				intersectionCollection.add(identifierCollection.identifierArray[i]);
 			}
 		}
 		return intersectionCollection;
@@ -99,10 +99,10 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 	public IdentifierCollection difference(IdentifierCollection identifierCollection) throws Exception {
 
 		IdentifierCollection differenceCollection = new IdentifierCollection(this);
-		IdentifierCollection secondCollection = new IdentifierCollection(identifierCollection);
-		for (int i = 0; i < secondCollection.numberOfElements; i++) {
-			if (differenceCollection.isDuplicate(secondCollection.identifierArray[i])) {
-				differenceCollection.removeIdentifier(secondCollection.identifierArray[i]);
+		//IdentifierCollection secondCollection = new IdentifierCollection(identifierCollection);
+		for (int i = 0; i < identifierCollection.numberOfElements; i++) {
+			if (differenceCollection.isDuplicate(identifierCollection.identifierArray[i])) {
+				differenceCollection.removeIdentifier(identifierCollection.identifierArray[i]);
 			}
 		}
 		return differenceCollection;
@@ -111,7 +111,7 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 	@Override
 	public IdentifierCollection symmetricDifference(IdentifierCollection identifierCollection) throws Exception {
 		IdentifierCollection unionCollection = union(identifierCollection);
-		IdentifierCollection intersectionCollection =intersection(identifierCollection);
+		IdentifierCollection intersectionCollection = intersection(identifierCollection);
 		IdentifierCollection symDifferenceCollection = unionCollection.difference(intersectionCollection);
 		return symDifferenceCollection;
 	}
