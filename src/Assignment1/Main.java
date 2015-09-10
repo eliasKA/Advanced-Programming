@@ -23,21 +23,18 @@ public class Main {
 								MSG_SYMMETRICDIFFERENCE = "Symmetric difference:\t";
 	
 	private PrintStream out;
-	private IdentifierCollectionRow collectionRow;
 
 	Main() {
 		out = new PrintStream(System.out);
 	}
 
-	private void executeCollectionOperations() throws Exception{
-		IdentifierCollection firstCollection = new IdentifierCollection(collectionRow.getCollectionAtIndex(0));
-		IdentifierCollection secondColletction = new IdentifierCollection(collectionRow.getCollectionAtIndex(1));
+	private void executeCollectionOperations(IdentifierCollection firstCollection, IdentifierCollection secondColletction ) throws Exception{
 		
 		out.println();
 		out.printf(MSG_COLLECTION_NU, 1);
-		printCollection(collectionRow.getCollectionAtIndex(0));
+		printCollection(firstCollection);
 		out.printf(MSG_COLLECTION_NU, 2);
-		printCollection(collectionRow.getCollectionAtIndex(1));
+		printCollection(secondColletction);
 		
 		out.println();
 		
@@ -52,42 +49,36 @@ public class Main {
 	}
 	
 	private void start() throws Exception {
-		IdentifierCollection newCollection = new IdentifierCollection();
+		IdentifierCollection 	collection1,
+								collection2;
 		Scanner in = new Scanner(System.in);
 		
 		while(true){
-			newCollection.init();
-			collectionRow = new IdentifierCollectionRow(MAX_COLLECTIONS);
-			
-			for (int i = 0; i < MAX_COLLECTIONS; i++) {
-				newCollection.init();
-				makeNewCollection(i, newCollection, in);
-			}
+			collection1 = makeNewCollection(1, in);
+			collection2 = makeNewCollection(2, in);
 
-			executeCollectionOperations();
+			executeCollectionOperations(collection1, collection2);
 			out.println();
 		}
 	}
 
-	private void makeNewCollection(int i, IdentifierCollection idColl, Scanner input) {
+	private IdentifierCollection makeNewCollection(int i, Scanner input) {
 		String inputLine;
-		
-		//if(!input.hasNextLine()){
-		//	out.println("");
-		//}
+		IdentifierCollection newCollection;
 		
 		try {
-			out.printf(MSG_GIVE_COLLECTION_NU, i + 1);
+			out.printf(MSG_GIVE_COLLECTION_NU, i);
 			inputLine = input.nextLine();
-			processLine(inputLine, idColl);
+			newCollection = processLine(inputLine);
 		} catch (Exception e) {
 			out.println(e.getMessage());
-			makeNewCollection(i, idColl, input);
+			return makeNewCollection(i, input);
 		}
 		
+		return newCollection;
 	}
 
-	private void processLine(String line, IdentifierCollection idColl) throws Exception {
+	private IdentifierCollection processLine(String line) throws Exception {
 		Scanner lineScanner = new Scanner(line);
 		lineScanner.useDelimiter("");
 
@@ -103,16 +94,17 @@ public class Main {
 		
 		} else if (line.length() == 2){
 			//This is one of the two cases in which the collection is empty 
-			collectionRow.addCollection(new IdentifierCollection());
+			return new IdentifierCollection();
 		
 		} else {
 			lineScanner.useDelimiter("}");
 			String collectionLine = lineScanner.next();
-			collectionRow.addCollection(processCollection(collectionLine, new IdentifierCollection(idColl)));
+			return processCollection(collectionLine);
 		}
 	}
 
-	private IdentifierCollection processCollection(String line, IdentifierCollection idColl) throws Exception {
+	private IdentifierCollection processCollection(String line) throws Exception {
+		IdentifierCollection newCollection = new IdentifierCollection();
 		Scanner lineScanner = new Scanner(line);
 
 		while (lineScanner.hasNext()) {
@@ -120,9 +112,10 @@ public class Main {
 
 			checkValidation(idString);
 
-			idColl.add(new Identifier(idString));
+			newCollection.add(new Identifier(idString));
 		}
-		return idColl;
+		
+		return newCollection;
 	}
 
 	private void checkValidation(String word) throws Exception {
