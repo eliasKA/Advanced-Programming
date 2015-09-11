@@ -45,18 +45,29 @@ public class Main {
 		printCollection(firstCollection.symmetricDifference(secondColletction));
 	}
 	
+	private void eol(Scanner scanner){
+		
+		if(!scanner.hasNext()){
+			out.printf("Exit");
+			System.exit(1);
+		}
+		
+		
+	}
+	
+	
 	private void start() throws Exception {
 		IdentifierCollection 	collection1,
 								collection2;
 		Scanner in = new Scanner(System.in);
 		
-		while(true){
+		do{
 			collection1 = makeNewCollection(1, in);
 			collection2 = makeNewCollection(2, in);
 
 			executeCollectionOperations(collection1, collection2);
 			out.println();
-		}
+		}while(true);
 	}
 
 	private IdentifierCollection makeNewCollection(int i, Scanner input) {
@@ -65,6 +76,7 @@ public class Main {
 		
 		try {
 			out.printf(MSG_GIVE_COLLECTION_NU, i);
+			
 			inputLine = input.nextLine();
 			newCollection = processLine(inputLine);
 		} catch (Exception e) {
@@ -106,6 +118,7 @@ public class Main {
 		Scanner lineScanner = new Scanner(line);
 
 		while (lineScanner.hasNext()) {
+		
 			String idString = lineScanner.next();
 
 			checkValidation(idString);
@@ -142,15 +155,8 @@ public class Main {
 		return (input.hasNext("[0-9]"));
 	}
 
-	private void printCollection(IdentifierCollection collection) throws Exception {
-		IdentifierCollection copiedCollection  = new IdentifierCollection(collection);
-		int size = copiedCollection.size();
-		
-		out.printf("{ ");
-		for (int i = 0; i < size; i++) {
-			out.printf("%s ",copiedCollection.getIdentifier());
-		}
-		out.printf("}\n");
+	private void printCollection(IdentifierCollection collection) {
+		out.printf("{"+collection+" }\n");
 	}
 
 	public static void main(String[] argv) throws Exception {

@@ -70,6 +70,8 @@ public interface IdentifierCollectionInterface {
 	 * @postcondition
 	 * 	An Identifier object is returned
 	 **/
+	
+
 	Identifier getIdentifier();
 	
 	/**
@@ -125,4 +127,12 @@ public interface IdentifierCollectionInterface {
 	 * 	FAILURE: An Exception is thrown with the reason why no collection is returned
 	 */
 	IdentifierCollection symmetricDifference(IdentifierCollection identifierCollection) throws Exception;
+	/**
+	 * Returns a collection of identifiers of type String
+	 * @precondition
+	 * 		-
+	 * @postcondition
+	 * 		collection is returned is returned
+	 **/
+	String toString();
 }

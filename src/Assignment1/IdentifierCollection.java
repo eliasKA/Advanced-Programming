@@ -1,3 +1,4 @@
+
 package Assignment1;
 
 public class IdentifierCollection implements IdentifierCollectionInterface {
@@ -11,7 +12,7 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 
 	IdentifierCollection(IdentifierCollection srcCollection) throws Exception {
 		init();
-		
+
 		int size = srcCollection.size();
 		for (int i = 0; i < size; i++) {
 			add(srcCollection.identifierArray[i]);
@@ -29,7 +30,7 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 		}
 		if (!isDuplicate(id)) {
 			identifierArray[numberOfElements] = id;
-			numberOfElements += 1;	
+			numberOfElements += 1;
 		}
 	}
 
@@ -83,10 +84,10 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 
 	@Override
 	public IdentifierCollection intersection(IdentifierCollection identifierCollection) throws Exception {
-		
+
 		IdentifierCollection intersectionCollection = new IdentifierCollection();
 		for (int i = 0; i < identifierCollection.numberOfElements; i++) {
-			if(isDuplicate(identifierCollection.identifierArray[i])) {
+			if (isDuplicate(identifierCollection.identifierArray[i])) {
 				intersectionCollection.add(identifierCollection.identifierArray[i]);
 			}
 		}
@@ -97,7 +98,7 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 	public IdentifierCollection difference(IdentifierCollection identifierCollection) throws Exception {
 
 		IdentifierCollection differenceCollection = new IdentifierCollection(this);
-			for (int i = 0; i < identifierCollection.numberOfElements; i++) {
+		for (int i = 0; i < identifierCollection.numberOfElements; i++) {
 			if (differenceCollection.isDuplicate(identifierCollection.identifierArray[i])) {
 				differenceCollection.removeIdentifier(identifierCollection.identifierArray[i]);
 			}
@@ -111,5 +112,14 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 		IdentifierCollection intersectionCollection = intersection(identifierCollection);
 		IdentifierCollection symDifferenceCollection = unionCollection.difference(intersectionCollection);
 		return symDifferenceCollection;
+	}
+
+	@Override
+	public String toString() {
+		String result = "";
+		for (int i = 0; i < numberOfElements; i++) {
+			result += " " + identifierArray[i];
+		}
+		return result;
 	}
 }
