@@ -5,9 +5,6 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class Main {
-
-	private static final int MAX_COLLECTIONS = 2;
-
 	private static final String EXC_BEGIN_WITH_BRACKET = "ERROR, INPUT MUST BEGIN WITH '{'",
 								EXC_END_WITH_BRACKET = "ERROR, INPUT MUST END WITH '}'", 
 								EXC_EMPTY_INPUT = "",
