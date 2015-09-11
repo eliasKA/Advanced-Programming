@@ -127,6 +127,7 @@ public interface IdentifierCollectionInterface {
 	 * 	FAILURE: An Exception is thrown with the reason why no collection is returned
 	 */
 	IdentifierCollection symmetricDifference(IdentifierCollection identifierCollection) throws Exception;
+	
 	/**
 	 * Returns a collection of identifiers of type String
 	 * @precondition
@@ -135,4 +136,15 @@ public interface IdentifierCollectionInterface {
 	 * 		collection is returned is returned
 	 **/
 	String toString();
+	
+	/**
+	 * Returns whether Object obj is equal to current Identifier
+	 * @param Object obj
+	 * @return whether Object obj is equal to current Identifier
+	 * @precondition
+	 * 	-
+	 * @postcondition
+	 * 	Whether the object is equal to the identifier is returned
+	 */
+	boolean equals(Object obj);
 }

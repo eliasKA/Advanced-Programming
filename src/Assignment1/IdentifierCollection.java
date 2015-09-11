@@ -19,6 +19,30 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 		}
 	}
 
+	public boolean equals(Object obj){
+		if(obj==null){
+			return false;
+		}else if(obj==this){
+			return true;
+		}else if(obj.getClass()!=getClass()){
+			return false;
+		}
+		
+		IdentifierCollection collectionObj = (IdentifierCollection) obj;
+		
+		if((collectionObj).numberOfElements != numberOfElements){
+			return false;
+		}
+		
+		for(int i = 0; i < numberOfElements; i++){
+			if(!identifierArray[i].equals(collectionObj.identifierArray[i])){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	public void init() {
 		identifierArray = new Identifier[MAX_ELEMENTS];
 		numberOfElements = 0;
@@ -36,7 +60,7 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 
 	private boolean isDuplicate(Identifier id) {
 		for (int i = 0; i < numberOfElements; i++) {
-			if (identifierArray[i].isEqualTo(id)) {
+			if (identifierArray[i].equals(id)) {
 				return true;
 			}
 		}
@@ -55,7 +79,7 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 
 	public void removeIdentifier(Identifier id) {
 		for (int i = 0; i < numberOfElements; i++) {
-			if (identifierArray[i].isEqualTo(id)) {
+			if (identifierArray[i].equals(id)) {
 				removeIdentifierAtIndex(i);
 			}
 		}

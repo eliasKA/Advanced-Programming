@@ -46,13 +46,10 @@ public class Main {
 	}
 	
 	private void eol(Scanner scanner){
-		
 		if(!scanner.hasNext()){
 			out.printf("Exit");
 			System.exit(1);
 		}
-		
-		
 	}
 	
 	
