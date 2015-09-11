@@ -93,8 +93,9 @@ public class Main {
 
 		if (!lineScanner.hasNext()) {
 			// Case in which nothing is filled in
+			
 			throw new Exception(EXC_EMPTY_INPUT);
-
+			
 		} else if (lineScanner.next().charAt(0) != '{') {
 			throw new Exception(EXC_BEGIN_WITH_BRACKET);
 

@@ -82,8 +82,47 @@ public interface IdentifierCollectionInterface {
 	 */
 	void removeIdentifier(Identifier id);
 	
+	/**
+	 * Returns the union between two collections
+	 * @param collection
+	 * @precondition
+	 * -
+	 * @postcondition
+	 * 	SUCCES:  the union collection is returned 
+	 * 	FAILURE: An Exception is thrown with the reason why no collection is returned
+	 */
 	IdentifierCollection union(IdentifierCollection identifierCollection) throws Exception;
+	
+	/**
+	 * Returns the intersection between two collections
+	 * @param collection
+	 * @precondition
+	 * -
+	 * @postcondition
+	 * 	SUCCES:  the intersection collection is returned 
+	 * 	FAILURE: An Exception is thrown with the reason why no collection is returned
+	 */
 	IdentifierCollection intersection(IdentifierCollection identifierCollection) throws Exception;
+	
+	/**
+	 * Returns the difference between two collections
+	 * @param collection
+	 * @precondition
+	 * -
+	 * @postcondition
+	 * 	SUCCES:  the difference collection is returned 
+	 * 	FAILURE: An Exception is thrown with the reason why no collection is returned
+	 */
 	IdentifierCollection difference(IdentifierCollection identifierCollection) throws Exception;
+	
+	/**
+	 * Returns the symmetric difference between two collections
+	 * @param collection
+	 * @precondition
+	 * -
+	 * @postcondition
+	 * 	SUCCES:  the symmetric difference collection is returned 
+	 * 	FAILURE: An Exception is thrown with the reason why no collection is returned
+	 */
 	IdentifierCollection symmetricDifference(IdentifierCollection identifierCollection) throws Exception;
 }
