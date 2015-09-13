@@ -47,8 +47,8 @@ public interface IdentifierCollectionInterface {
 	 * 	-
 	 * @postcondition
 	 * 		SUCCES: The Identifier object is added to the collection
-	 * 		FAILURE: An Exception is thrown with the reason why id was not added
-	 **/
+	 * 		FAILURE: An Exception is thrown the size is exceeded
+	 * 	 **/
 	void add(Identifier id) throws Exception;
 	
 	/**
@@ -78,9 +78,9 @@ public interface IdentifierCollectionInterface {
 	 * Removes Identifier id from the collection
 	 * @param id
 	 * @precondition
-	 * 	Identifier id HAS to be one of the elements in the collection
+	 * 	
 	 * @postcondition
-	 * 	Identifier id has been removed from the collection
+	 * 	Identifier id has been not listed in the collection
 	 */
 	void removeIdentifier(Identifier id);
 	
@@ -91,7 +91,7 @@ public interface IdentifierCollectionInterface {
 	 * -
 	 * @postcondition
 	 * 	SUCCES:  the union collection is returned 
-	 * 	FAILURE: An Exception is thrown with the reason why no collection is returned
+	 * 	FAILURE: An Exception is thrown with the reason why no 
 	 */
 	IdentifierCollection union(IdentifierCollection identifierCollection) throws Exception;
 	
@@ -133,7 +133,7 @@ public interface IdentifierCollectionInterface {
 	 * @precondition
 	 * 		-
 	 * @postcondition
-	 * 		collection is returned is returned
+	 * 		String reprcollection is returned is returned
 	 **/
 	String toString();
 	

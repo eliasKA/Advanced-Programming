@@ -70,7 +70,7 @@ public class Main {
 	private IdentifierCollection makeNewCollection(int i, Scanner input) {
 		String inputLine;
 		IdentifierCollection newCollection;
-		
+		//do While
 		try {
 			out.printf(MSG_GIVE_COLLECTION_NU, i);
 			

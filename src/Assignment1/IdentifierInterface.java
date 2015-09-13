@@ -37,7 +37,7 @@ public interface IdentifierInterface {
 	 * @precondition
 	 * 		-
 	 * @postcondition
-	 * 		identifier is returned
+	 * 		string reoresentation is identifier is returned
 	 **/
 	String toString();
 	
@@ -45,7 +45,7 @@ public interface IdentifierInterface {
 	 * Initializes the object with the String parameter that is given 
 	 * @param s
 	 * @precondition
-	 * 		String s has to meed the domain of the identifier
+	 * 		String s has to meet the domain of the identifier
 	 * @postcondition
 	 * 		identifier is changed to contain the same elements as s
 	 */
@@ -58,7 +58,7 @@ public interface IdentifierInterface {
 	 * @precondition
 	 * 	-
 	 * @postcondition
-	 * 	Whether the object is equal to the identifier is returned
+	 * 	Whether the object is equal to the identifier is returned true ? false
 	 */
 	boolean isEqualTo(Identifier id);
 }
