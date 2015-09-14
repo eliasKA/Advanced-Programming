@@ -9,8 +9,8 @@ package Assignment1;
  * @structure
  * 	linear
  * @domain
- * 	identifier has to be alphanumeric
- *  identifier has to start with a letter
+ * 	elements in the identifier have to be alphanumeric
+ *  first element has to be a letter
  *  identifier must contain a minimum of 1 character
  * @constructor
  * 	Identifier(String s);
@@ -35,6 +35,7 @@ public interface IdentifierInterface {
 	/**
 	 * Initializes the object with the String parameter that is given 
 	 * @param s
+	 * 	A String representation of an identifier
 	 * @precondition
 	 * 		String s has to meet the domain of the identifier
 	 * @postcondition
@@ -44,7 +45,8 @@ public interface IdentifierInterface {
 	
 	/**
 	 * Returns whether Identifier identifier is equal to current Identifier
-	 * @param identifier
+	 * @param obj
+	 * 	obj of type Object that will be compared to the Identifier object.
 	 * @return whether Identifier identifier is equal to current Identifier
 	 * @precondition
 	 * 	-
@@ -52,5 +54,15 @@ public interface IdentifierInterface {
 	 * 		returns true: The input object is equal to the current identifier object
 	 * 		returns false: The input object is NOT equal to the current identifier object
 	 */
+	boolean equals(Object obj);
+	
+	/**
+	 * @return String representation of the identifier object
+	 * @precondition
+	 * 	-
+	 * @postcondition
+	 * 	String representation of the identifier object is printed
+	 **/
+	String toString();
 }
  

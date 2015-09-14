@@ -10,12 +10,12 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 		init();
 	}
 
-	IdentifierCollection(IdentifierCollection srcCollection) throws Exception {
+	IdentifierCollection(IdentifierCollection srcCollection){
 		init();
-
 		int size = srcCollection.size();
+		
 		for (int i = 0; i < size; i++) {
-			add(srcCollection.identifierArray[i]);
+			identifierArray[i] = srcCollection.identifierArray[i];
 		}
 	}
 
@@ -107,19 +107,20 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 	}
 
 	@Override
-	public IdentifierCollection intersection(IdentifierCollection identifierCollection) throws Exception {
+	public IdentifierCollection intersection(IdentifierCollection identifierCollection){
 
 		IdentifierCollection intersectionCollection = new IdentifierCollection();
-		for (int i = 0; i < identifierCollection.numberOfElements; i++) {
+		for (int i = 0, j = 0; i < identifierCollection.numberOfElements; i++) {
 			if (isDuplicate(identifierCollection.identifierArray[i])) {
-				intersectionCollection.add(identifierCollection.identifierArray[i]);
+				intersectionCollection.identifierArray[j] = identifierCollection.identifierArray[i];
+				j++;
 			}
 		}
 		return intersectionCollection;
 	}
 
 	@Override
-	public IdentifierCollection difference(IdentifierCollection identifierCollection) throws Exception {
+	public IdentifierCollection difference(IdentifierCollection identifierCollection){
 
 		IdentifierCollection differenceCollection = new IdentifierCollection(this);
 		for (int i = 0; i < identifierCollection.numberOfElements; i++) {

@@ -43,10 +43,11 @@ public interface IdentifierCollectionInterface {
 	/**
 	 * Adds an Identifier object to the collection
 	 * @param id
+	 * 	The identifier object that has to be added to the collection
 	 * @precondition
 	 * 	-
 	 * @postcondition
-	 * 		SUCCES: The Identifier object is added to the collection
+	 * 		SUCCESS: The Identifier object is added to the collection
 	 * 		FAILURE: An Exception is thrown when the size of the collection exceeds the maximum 
 	 * 	 **/
 	void add(Identifier id) throws Exception;
@@ -62,25 +63,22 @@ public interface IdentifierCollectionInterface {
 	int size();
 	
 	/**
-	 * Returns an identifier that ha not yet been returned 
-	 * @param i
-	 * @return Identifier object at index i
+	 * Returns an identifier that has not yet been returned 
+	 * @return a not-yet returned Identifier object
 	 * @precondition
 	 * 	The collection is not empty
 	 * @postcondition
 	 * 	An Identifier object is returned
 	 **/
-	
-
 	Identifier getIdentifier();
 	
 	/**
 	 * Removes Identifier id from the collection
 	 * @param id
 	 * @precondition
-	 * 	
+	 * 	-
 	 * @postcondition
-	 * 	Identifier id has been not listed in the collection
+	 * 	Identifier id is not in the collection
 	 */
 	void removeIdentifier(Identifier id);
 	
@@ -90,7 +88,7 @@ public interface IdentifierCollectionInterface {
 	 * @precondition
 	 * -
 	 * @postcondition
-	 * 	SUCCES:  the union collection is returned 
+	 * 	SUCCESS:  the union collection is returned 
 	 * 	FAILURE: An Exception is thrown if the resulting collection exceeds the maximum size
 	 */
 	IdentifierCollection union(IdentifierCollection identifierCollection) throws Exception;
@@ -101,10 +99,10 @@ public interface IdentifierCollectionInterface {
 	 * @precondition
 	 * -
 	 * @postcondition
-	 * 	SUCCES:  the intersection collection is returned 
+	 * 	SUCCESS:  the intersection collection is returned 
 	 * 	FAILURE: An Exception is thrown with the reason why no collection is returned
 	 */
-	IdentifierCollection intersection(IdentifierCollection identifierCollection) throws Exception;
+	IdentifierCollection intersection(IdentifierCollection identifierCollection);
 	
 	/**
 	 * Returns the difference between two collections
@@ -114,7 +112,7 @@ public interface IdentifierCollectionInterface {
 	 * @postcondition
 	 * 	The difference collection of the current collection on the parameter collection is returned 
 	 */
-	IdentifierCollection difference(IdentifierCollection identifierCollection) throws Exception;
+	IdentifierCollection difference(IdentifierCollection identifierCollection);
 	
 	/**
 	 * Returns the symmetric difference between two collections
@@ -122,7 +120,7 @@ public interface IdentifierCollectionInterface {
 	 * @precondition
 	 * -
 	 * @postcondition
-	 * 	SUCCES:  the symmetric difference collection is returned 
+	 * 	SUCCESS:  the symmetric difference collection is returned 
 	 * 	FAILURE: An Exception is thrown when the resulting collection exceeds the maximum size
 	 */
 	IdentifierCollection symmetricDifference(IdentifierCollection identifierCollection) throws Exception;
