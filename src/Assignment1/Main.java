@@ -45,13 +45,10 @@ public class Main {
 		printCollection(firstCollection.symmetricDifference(secondColletction));
 	}
 	
-	private void eol(Scanner scanner){
-		if(!scanner.hasNext()){
-			out.printf("Exit");
-			System.exit(1);
-		}
+	private void systemExit(Scanner scanner) throws Exception{
+		//if user presses ctrl-z, throw an exception that has leads to a system exit
+		//yet to be implemented
 	}
-	
 	
 	private void start() throws Exception {
 		IdentifierCollection 	collection1,
@@ -69,28 +66,54 @@ public class Main {
 
 	private IdentifierCollection makeNewCollection(int i, Scanner input) {
 		String inputLine;
-		IdentifierCollection newCollection;
-		//do While
-		try {
-			out.printf(MSG_GIVE_COLLECTION_NU, i);
-			
-			inputLine = input.nextLine();
-			newCollection = processLine(inputLine);
-		} catch (Exception e) {
-			out.println(e.getMessage());
-			return makeNewCollection(i, input);
-		}
+		IdentifierCollection newCollection = new IdentifierCollection();
+		boolean exceptionThrown;
+		
+		do{
+			try {
+				exceptionThrown = false;
+				
+				out.printf(MSG_GIVE_COLLECTION_NU, i);
+				inputLine = input.nextLine();
+				newCollection = processLine(inputLine);
+			} catch (Exception e) {
+				exceptionThrown = true;
+				
+				out.println(e.getMessage());
+			}
+		}while(exceptionThrown);
 		
 		return newCollection;
 	}
 
 	private IdentifierCollection processLine(String line) throws Exception {
+		String collectionLine = checkValidationOfLine(line);
+		//The String 'line' contains everything that's between the brackets { ... }
+		
+		return processCollection(collectionLine);
+	}
+
+	private IdentifierCollection processCollection(String collectionLine) throws Exception {
+		// The collectionLine includes every identifier filled in by the user: { ... }
+		
+		IdentifierCollection newCollection = new IdentifierCollection();
+		Scanner collectionScanner = new Scanner(collectionLine);
+		String inputIdentifier;
+		
+		while (collectionScanner.hasNext()) {
+			inputIdentifier = checkValidationOfWord(collectionScanner);
+			newCollection.add(new Identifier(inputIdentifier));
+		}
+		
+		return newCollection;
+	}
+
+	private String checkValidationOfLine(String line) throws Exception{
+		//This method returns the input between the brackets if the general input is valid, and throws an exception if it is not.		
 		Scanner lineScanner = new Scanner(line);
 		lineScanner.useDelimiter("");
 
 		if (!lineScanner.hasNext()) {
-			// Case in which nothing is filled in
-			
 			throw new Exception(EXC_EMPTY_INPUT);
 			
 		} else if (lineScanner.next().charAt(0) != '{') {
@@ -98,48 +121,29 @@ public class Main {
 
 		} else if (line.charAt(line.length() - 1) != '}') {
 			throw new Exception(EXC_END_WITH_BRACKET);
-		
-		} else if (line.length() == 2){
-			//This is one of the two cases in which the collection is empty 
-			return new IdentifierCollection();
-		
-		} else {
-			lineScanner.useDelimiter("}");
-			String collectionLine = lineScanner.next();
-			return processCollection(collectionLine);
 		}
+		
+		lineScanner.useDelimiter("}");
+		return lineScanner.next();
 	}
+	
+	private String checkValidationOfWord(Scanner input) throws Exception {
+		//This method returns the next input identifier if it is valid, and throws an exception if it is not.
+		String inputIdentifier = input.next();
+		Scanner inputIdentifierScanner = new Scanner(inputIdentifier);
 
-	private IdentifierCollection processCollection(String line) throws Exception {
-		IdentifierCollection newCollection = new IdentifierCollection();
-		Scanner lineScanner = new Scanner(line);
-
-		while (lineScanner.hasNext()) {
-		
-			String idString = lineScanner.next();
-
-			checkValidation(idString);
-
-			newCollection.add(new Identifier(idString));
+		if(!nextCharIsLetter(inputIdentifierScanner)){
+			throw new Exception(EXC_FIRST_NOT_LETTER + inputIdentifier);
 		}
 		
-		return newCollection;
-	}
-
-	private void checkValidation(String word) throws Exception {
-		Scanner wordScanner = new Scanner(word);
-
-		if(!nextCharIsLetter(wordScanner)){
-			throw new Exception(EXC_FIRST_NOT_LETTER + word);
-		}
-		
-		for (int i = 0; i < word.length(); i++) {
-			if (!nextCharIsLetter(wordScanner) && !nextCharIsDigit(wordScanner)) {
-				throw new Exception(EXC_NON_ALPHANUMERIC_INPUT + word);
+		for (int i = 0; i < inputIdentifier.length(); i++) {
+			if (!nextCharIsLetter(inputIdentifierScanner) && !nextCharIsDigit(inputIdentifierScanner)) {
+				throw new Exception(EXC_NON_ALPHANUMERIC_INPUT + inputIdentifier);
 			}
-
-			wordScanner.next();
+			inputIdentifierScanner.next();
 		}
+		
+		return inputIdentifier;
 	}
 
 	private boolean nextCharIsLetter(Scanner input) {
@@ -153,7 +157,7 @@ public class Main {
 	}
 
 	private void printCollection(IdentifierCollection collection) {
-		out.printf("{"+collection+" }\n");
+		out.println("{" + collection + " }");
 	}
 
 	public static void main(String[] argv) throws Exception {

@@ -47,7 +47,7 @@ public interface IdentifierCollectionInterface {
 	 * 	-
 	 * @postcondition
 	 * 		SUCCES: The Identifier object is added to the collection
-	 * 		FAILURE: An Exception is thrown the size is exceeded
+	 * 		FAILURE: An Exception is thrown when the size of the collection exceeds the maximum 
 	 * 	 **/
 	void add(Identifier id) throws Exception;
 	
@@ -91,7 +91,7 @@ public interface IdentifierCollectionInterface {
 	 * -
 	 * @postcondition
 	 * 	SUCCES:  the union collection is returned 
-	 * 	FAILURE: An Exception is thrown with the reason why no 
+	 * 	FAILURE: An Exception is thrown if the resulting collection exceeds the maximum size
 	 */
 	IdentifierCollection union(IdentifierCollection identifierCollection) throws Exception;
 	
@@ -104,7 +104,7 @@ public interface IdentifierCollectionInterface {
 	 * 	SUCCES:  the intersection collection is returned 
 	 * 	FAILURE: An Exception is thrown with the reason why no collection is returned
 	 */
-	IdentifierCollection intersection(IdentifierCollection identifierCollection) throws Exception;
+	IdentifierCollection intersection(IdentifierCollection identifierCollection);
 	
 	/**
 	 * Returns the difference between two collections
@@ -112,10 +112,9 @@ public interface IdentifierCollectionInterface {
 	 * @precondition
 	 * -
 	 * @postcondition
-	 * 	SUCCES:  the difference collection is returned 
-	 * 	FAILURE: An Exception is thrown with the reason why no collection is returned
+	 * 	The difference collection of the current collection on the parameter collection is returned 
 	 */
-	IdentifierCollection difference(IdentifierCollection identifierCollection) throws Exception;
+	IdentifierCollection difference(IdentifierCollection identifierCollection);
 	
 	/**
 	 * Returns the symmetric difference between two collections
@@ -124,27 +123,7 @@ public interface IdentifierCollectionInterface {
 	 * -
 	 * @postcondition
 	 * 	SUCCES:  the symmetric difference collection is returned 
-	 * 	FAILURE: An Exception is thrown with the reason why no collection is returned
+	 * 	FAILURE: An Exception is thrown when the resulting collection exceeds the maximum size
 	 */
 	IdentifierCollection symmetricDifference(IdentifierCollection identifierCollection) throws Exception;
-	
-	/**
-	 * Returns a collection of identifiers of type String
-	 * @precondition
-	 * 		-
-	 * @postcondition
-	 * 		String reprcollection is returned is returned
-	 **/
-	String toString();
-	
-	/**
-	 * Returns whether Object obj is equal to current Identifier
-	 * @param Object obj
-	 * @return whether Object obj is equal to current Identifier
-	 * @precondition
-	 * 	-
-	 * @postcondition
-	 * 	Whether the object is equal to the identifier is returned
-	 */
-	boolean equals(Object obj);
 }

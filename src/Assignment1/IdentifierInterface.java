@@ -33,21 +33,12 @@ package Assignment1;
 public interface IdentifierInterface {
 	
 	/**
-	 * Returns the identifier of type String
-	 * @precondition
-	 * 		-
-	 * @postcondition
-	 * 		string reoresentation is identifier is returned
-	 **/
-	String toString();
-	
-	/**
 	 * Initializes the object with the String parameter that is given 
 	 * @param s
 	 * @precondition
 	 * 		String s has to meet the domain of the identifier
 	 * @postcondition
-	 * 		identifier is changed to contain the same elements as s
+	 * 		Identifier is changed to contain the same elements as s
 	 */
 	void init(String s);
 	
@@ -58,8 +49,8 @@ public interface IdentifierInterface {
 	 * @precondition
 	 * 	-
 	 * @postcondition
-	 * 	Whether the object is equal to the identifier is returned true ? false
+	 * 		returns true: The input object is equal to the current identifier object
+	 * 		returns false: The input object is NOT equal to the current identifier object
 	 */
-	boolean isEqualTo(Identifier id);
 }
  

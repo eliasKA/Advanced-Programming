@@ -23,8 +23,16 @@ public class Identifier implements IdentifierInterface {
 	}
 
 	@Override
-	public boolean isEqualTo(Identifier id) {
-		return id.toString().equals(identifier)?true:false;
-	}
-	
+	public boolean equals(Object obj) {
+		if(obj==null){
+			return false;
+		}else if(obj==this){
+			return true;
+		}else if(obj.getClass()!=getClass()){
+			return false;
+		}
+		
+		Identifier identifierObj = (Identifier) obj;
+		return identifierObj.identifier.equals(identifier)?true:false;
+	}	
 }
