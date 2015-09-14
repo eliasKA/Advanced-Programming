@@ -104,7 +104,7 @@ public interface IdentifierCollectionInterface {
 	 * 	SUCCES:  the intersection collection is returned 
 	 * 	FAILURE: An Exception is thrown with the reason why no collection is returned
 	 */
-	IdentifierCollection intersection(IdentifierCollection identifierCollection);
+	IdentifierCollection intersection(IdentifierCollection identifierCollection) throws Exception;
 	
 	/**
 	 * Returns the difference between two collections
@@ -114,7 +114,7 @@ public interface IdentifierCollectionInterface {
 	 * @postcondition
 	 * 	The difference collection of the current collection on the parameter collection is returned 
 	 */
-	IdentifierCollection difference(IdentifierCollection identifierCollection);
+	IdentifierCollection difference(IdentifierCollection identifierCollection) throws Exception;
 	
 	/**
 	 * Returns the symmetric difference between two collections
