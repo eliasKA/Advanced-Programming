@@ -47,8 +47,8 @@ public interface IdentifierCollectionInterface {
 	 * 	-
 	 * @postcondition
 	 * 		SUCCES: The Identifier object is added to the collection
-	 * 		FAILURE: An Exception is thrown with the reason why id was not added
-	 **/
+	 * 		FAILURE: An Exception is thrown the size is exceeded
+	 * 	 **/
 	void add(Identifier id) throws Exception;
 	
 	/**
@@ -70,20 +70,81 @@ public interface IdentifierCollectionInterface {
 	 * @postcondition
 	 * 	An Identifier object is returned
 	 **/
+	
+
 	Identifier getIdentifier();
 	
 	/**
 	 * Removes Identifier id from the collection
 	 * @param id
 	 * @precondition
-	 * 	Identifier id HAS to be one of the elements in the collection
+	 * 	
 	 * @postcondition
-	 * 	Identifier id has been removed from the collection
+	 * 	Identifier id has been not listed in the collection
 	 */
 	void removeIdentifier(Identifier id);
 	
+	/**
+	 * Returns the union between two collections
+	 * @param collection
+	 * @precondition
+	 * -
+	 * @postcondition
+	 * 	SUCCES:  the union collection is returned 
+	 * 	FAILURE: An Exception is thrown with the reason why no 
+	 */
 	IdentifierCollection union(IdentifierCollection identifierCollection) throws Exception;
+	
+	/**
+	 * Returns the intersection between two collections
+	 * @param collection
+	 * @precondition
+	 * -
+	 * @postcondition
+	 * 	SUCCES:  the intersection collection is returned 
+	 * 	FAILURE: An Exception is thrown with the reason why no collection is returned
+	 */
 	IdentifierCollection intersection(IdentifierCollection identifierCollection) throws Exception;
+	
+	/**
+	 * Returns the difference between two collections
+	 * @param collection
+	 * @precondition
+	 * -
+	 * @postcondition
+	 * 	SUCCES:  the difference collection is returned 
+	 * 	FAILURE: An Exception is thrown with the reason why no collection is returned
+	 */
 	IdentifierCollection difference(IdentifierCollection identifierCollection) throws Exception;
+	
+	/**
+	 * Returns the symmetric difference between two collections
+	 * @param collection
+	 * @precondition
+	 * -
+	 * @postcondition
+	 * 	SUCCES:  the symmetric difference collection is returned 
+	 * 	FAILURE: An Exception is thrown with the reason why no collection is returned
+	 */
 	IdentifierCollection symmetricDifference(IdentifierCollection identifierCollection) throws Exception;
+	
+	/**
+	 * Returns a collection of identifiers of type String
+	 * @precondition
+	 * 		-
+	 * @postcondition
+	 * 		String reprcollection is returned is returned
+	 **/
+	String toString();
+	
+	/**
+	 * Returns whether Object obj is equal to current Identifier
+	 * @param Object obj
+	 * @return whether Object obj is equal to current Identifier
+	 * @precondition
+	 * 	-
+	 * @postcondition
+	 * 	Whether the object is equal to the identifier is returned
+	 */
+	boolean equals(Object obj);
 }
