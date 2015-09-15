@@ -10,14 +10,17 @@ public class Main {
 								EXC_EMPTY_INPUT = "",
 								EXC_NON_ALPHANUMERIC_INPUT = "ERROR, NON-ALPHANUMERIC INPUT : ",
 								EXC_FIRST_NOT_LETTER = "ERROR, THE FIRST CHARACTER HAS TO BE A LETTER : ",
-								EXC_END_PROGRAM = "PROGRAM EXIT";
+								EXC_END_PROGRAM = "PROGRAM EXIT",
+								//This is the exception-message that the Scanner object throws when ctrl-z is pressed.
+								EXC_CONSOLE_EXIT = "No line found";
 
 	private static final String MSG_GIVE_COLLECTION_NU = "Please enter collection #%d : ",
 								MSG_COLLECTION_NU = "Collection #%d:\t\t",
 								MSG_UNION = "Union:\t\t\t",
 								MSG_DIFFERENCE = "Difference:\t\t",
 								MSG_INTERSECTION = "Intersection:\t\t",
-								MSG_SYMMETRICDIFFERENCE = "Symmetric difference:\t";
+								MSG_SYMMETRICDIFFERENCE = "Symmetric difference:\t",
+								MSG_SYSTEM_EXIT = "PROGRAM TERMINATED";
 	
 	private PrintStream out;
 
@@ -79,6 +82,12 @@ public class Main {
 			} catch (Exception e) {
 				exceptionThrown = true;
 				
+				if(e.getMessage().equals(EXC_CONSOLE_EXIT)){
+					out.println();
+					out.println(MSG_SYSTEM_EXIT);
+					System.exit(1);
+				}
+				
 				out.println(e.getMessage());
 			}
 		}while(exceptionThrown);
@@ -88,20 +97,20 @@ public class Main {
 
 	private IdentifierCollection processLine(String line) throws Exception {
 		String collectionLine = checkValidationOfLine(line);
-		//The String 'line' contains everything that's between the brackets { ... }
+		//The String 'line' contains the whole input line, including the brackets, ex: "{ a b c }"
 		
 		return processCollection(collectionLine);
 	}
 
 	private IdentifierCollection processCollection(String collectionLine) throws Exception {
-		// The collectionLine includes every identifier filled in by the user: { ... }
+		// The argument includes everything filled in by the user between the brackets, ex: "a b c"
 		
 		IdentifierCollection newCollection = new IdentifierCollection();
 		Scanner collectionScanner = new Scanner(collectionLine);
 		String inputIdentifier;
 		
 		while (collectionScanner.hasNext()) {
-			inputIdentifier = checkValidationOfWord(collectionScanner);
+			inputIdentifier = checkValidationOfNextWord(collectionScanner);
 			newCollection.add(new Identifier(inputIdentifier));
 		}
 		
@@ -109,7 +118,9 @@ public class Main {
 	}
 
 	private String checkValidationOfLine(String line) throws Exception{
-		//This method returns the input between the brackets if the general input is valid, and throws an exception if it is not.		
+		//This method returns the input between the brackets if the general input is valid, and throws an exception if it is not.	
+		//"{a b c}" -> "a b c"
+		
 		Scanner lineScanner = new Scanner(line);
 		lineScanner.useDelimiter("");
 
@@ -127,8 +138,9 @@ public class Main {
 		return lineScanner.next();
 	}
 	
-	private String checkValidationOfWord(Scanner input) throws Exception {
+	private String checkValidationOfNextWord(Scanner input) throws Exception {
 		//This method returns the next input identifier if it is valid, and throws an exception if it is not.
+		
 		String inputIdentifier = input.next();
 		Scanner inputIdentifierScanner = new Scanner(inputIdentifier);
 
