@@ -133,7 +133,13 @@ public class Main {
 		}
 		
 		lineScanner.useDelimiter("}");
-		return lineScanner.next();
+		
+		if(lineScanner.hasNext()){
+			return lineScanner.next();
+		}else{
+			return " "; 
+		}
+		
 	}
 	
 	private String checkValidationOfNextWord(Scanner input) throws Exception {
