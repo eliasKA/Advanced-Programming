@@ -47,11 +47,6 @@ public class Main {
 		printCollection(firstCollection.symmetricDifference(secondColletction));
 	}
 	
-	private void systemExit(Scanner scanner) throws Exception{
-		//if user presses ctrl-z, throw an exception that has leads to a system exit
-		//yet to be implemented
-	}
-	
 	private void start() throws Exception {
 		IdentifierCollection 	collection1,
 								collection2;

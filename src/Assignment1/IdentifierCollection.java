@@ -16,6 +16,7 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 		
 		for (int i = 0; i < size; i++) {
 			identifierArray[i] = srcCollection.identifierArray[i];
+			numberOfElements+=1;
 		}
 	}
 
@@ -52,6 +53,7 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 		if (numberOfElements >= MAX_ELEMENTS) {
 			throw new Exception("MAX AMOUNT OF ELEMENTS EXCEEDED");
 		}
+		
 		if (!isDuplicate(id)) {
 			identifierArray[numberOfElements] = id;
 			numberOfElements += 1;
@@ -113,6 +115,7 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 		for (int i = 0, j = 0; i < identifierCollection.numberOfElements; i++) {
 			if (isDuplicate(identifierCollection.identifierArray[i])) {
 				intersectionCollection.identifierArray[j] = identifierCollection.identifierArray[i];
+				intersectionCollection.numberOfElements += 1;
 				j++;
 			}
 		}
