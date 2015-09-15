@@ -10,7 +10,6 @@ public class Main {
 								EXC_EMPTY_INPUT = "",
 								EXC_NON_ALPHANUMERIC_INPUT = "ERROR, NON-ALPHANUMERIC INPUT : ",
 								EXC_FIRST_NOT_LETTER = "ERROR, THE FIRST CHARACTER HAS TO BE A LETTER : ",
-								EXC_END_PROGRAM = "PROGRAM EXIT",
 								//This is the exception-message that the Scanner object throws when ctrl-z is pressed.
 								EXC_CONSOLE_EXIT = "No line found";
 
@@ -119,7 +118,7 @@ public class Main {
 
 	private String checkValidationOfLine(String line) throws Exception{
 		//This method returns the input between the brackets if the general input is valid, and throws an exception if it is not.	
-		//"{a b c}" -> "a b c"
+		//"{a b c}" --(check if valid)--> "a b c"
 		
 		Scanner lineScanner = new Scanner(line);
 		lineScanner.useDelimiter("");
