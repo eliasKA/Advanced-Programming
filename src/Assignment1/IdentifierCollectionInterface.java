@@ -139,4 +139,7 @@ public interface IdentifierCollectionInterface {
 	 * 	FAILURE: An Exception is thrown when the resulting collection exceeds the maximum size
 	 */
 	IdentifierCollection symmetricDifference(IdentifierCollection identifierCollection) throws Exception;
+	
+	// TODO
+	boolean contains(Identifier i); // or isDuplicate() or whatever
 }

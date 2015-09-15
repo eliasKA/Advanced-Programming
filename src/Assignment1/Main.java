@@ -47,7 +47,7 @@ public class Main {
 		printCollection(firstCollection.symmetricDifference(secondColletction));
 	}
 	
-	private void start() throws Exception {
+	private void start() {
 		IdentifierCollection 	collection1,
 								collection2;
 		Scanner in = new Scanner(System.in);
@@ -56,9 +56,16 @@ public class Main {
 			collection1 = makeNewCollection(1, in);
 			collection2 = makeNewCollection(2, in);
 
-			executeCollectionOperations(collection1, collection2);
+			try {
+				executeCollectionOperations(collection1, collection2);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				out.println(e.getMessage());
+			}
 			out.println();
-		}while(true);
+		}while(in.hasNext());
+		
+		out.println("exit");
 	}
 	
 	private void eoln(Exception e){
@@ -176,7 +183,7 @@ public class Main {
 		out.println("{" + collection + " }");
 	}
 
-	public static void main(String[] argv) throws Exception {
+	public static void main(String[] argv) {
 		new Main().start();
 	}
 }
