@@ -7,10 +7,10 @@ import java.util.regex.Pattern;
 public class Main {
 	private static final String EXC_BEGIN_WITH_BRACKET = "ERROR, INPUT MUST BEGIN WITH '{'",
 								EXC_END_WITH_BRACKET = "ERROR, INPUT MUST END WITH '}'", 
-								EXC_EMPTY_INPUT = "",
+								EXC_EMPTY_INPUT = "Please re-enter input",
 								EXC_NON_ALPHANUMERIC_INPUT = "ERROR, NON-ALPHANUMERIC INPUT : ",
 								EXC_FIRST_NOT_LETTER = "ERROR, THE FIRST CHARACTER HAS TO BE A LETTER : ",
-								//This is the exception-message that the Scanner object throws when ctrl-z is pressed.
+								//This is the exception-message that the Scanner object throws when ctrl-z (windows) or ctrl-d (linux) is pressed.
 								EXC_CONSOLE_EXIT = "No line found";
 
 	private static final String MSG_GIVE_COLLECTION_NU = "Please enter collection #%d : ",
@@ -60,6 +60,14 @@ public class Main {
 			out.println();
 		}while(true);
 	}
+	
+	private void eoln(Exception e){
+		if(e.getMessage().equals(EXC_CONSOLE_EXIT)){
+			out.println();
+			out.println(MSG_SYSTEM_EXIT);
+			System.exit(1);
+		}
+	}
 
 	private IdentifierCollection makeNewCollection(int i, Scanner input) {
 		String inputLine;
@@ -73,15 +81,10 @@ public class Main {
 				out.printf(MSG_GIVE_COLLECTION_NU, i);
 				inputLine = input.nextLine();
 				newCollection = processLine(inputLine);
+				
 			} catch (Exception e) {
 				exceptionThrown = true;
-				
-				if(e.getMessage().equals(EXC_CONSOLE_EXIT)){
-					out.println();
-					out.println(MSG_SYSTEM_EXIT);
-					System.exit(1);
-				}
-				
+				eoln(e);
 				out.println(e.getMessage());
 			}
 		}while(exceptionThrown);
@@ -126,6 +129,7 @@ public class Main {
 
 		} else if (line.charAt(line.length() - 1) != '}') {
 			throw new Exception(EXC_END_WITH_BRACKET);
+			
 		}
 		
 		lineScanner.useDelimiter("}");

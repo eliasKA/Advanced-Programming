@@ -15,8 +15,12 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 		int size = srcCollection.size();
 		
 		for (int i = 0; i < size; i++) {
-			identifierArray[i] = srcCollection.identifierArray[i];
-			numberOfElements+=1;
+			try {
+				add(srcCollection.identifierArray[i]);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -73,15 +77,15 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 		return numberOfElements;
 	}
 
-	public Identifier getIdentifier() {
+	public Identifier getIdentifier(){
 		Identifier id = identifierArray[0];
 		removeIdentifierAtIndex(0);
 		return id;
 	}
 
-	public void removeIdentifier(Identifier id) {
+	public void removeIdentifier(Identifier identifier) {
 		for (int i = 0; i < numberOfElements; i++) {
-			if (identifierArray[i].equals(id)) {
+			if (identifierArray[i].equals(identifier)) {
 				removeIdentifierAtIndex(i);
 			}
 		}
@@ -114,9 +118,12 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 		IdentifierCollection intersectionCollection = new IdentifierCollection();
 		for (int i = 0, j = 0; i < identifierCollection.numberOfElements; i++) {
 			if (isDuplicate(identifierCollection.identifierArray[i])) {
-				intersectionCollection.identifierArray[j] = identifierCollection.identifierArray[i];
-				intersectionCollection.numberOfElements += 1;
-				j++;
+				try {
+					intersectionCollection.add(identifierCollection.identifierArray[i]);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		return intersectionCollection;
@@ -124,7 +131,6 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 
 	@Override
 	public IdentifierCollection difference(IdentifierCollection identifierCollection){
-
 		IdentifierCollection differenceCollection = new IdentifierCollection(this);
 		for (int i = 0; i < identifierCollection.numberOfElements; i++) {
 			if (differenceCollection.isDuplicate(identifierCollection.identifierArray[i])) {
@@ -149,5 +155,10 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 			result += " " + identifierArray[i];
 		}
 		return result;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return size() == 0;
 	}
 }

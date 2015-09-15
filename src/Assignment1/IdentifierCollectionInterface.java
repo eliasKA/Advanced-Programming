@@ -63,6 +63,17 @@ public interface IdentifierCollectionInterface {
 	int size();
 	
 	/**
+	 * Returns whether the collection is empty
+	 * @return whether the collection is empty
+	 * @precondition
+	 * 	-
+	 * @postcondition
+	 * 	true: collection is empty
+	 * 	false: collection is not empty
+	 **/
+	boolean isEmpty();
+	
+	/**
 	 * Returns an identifier that has not yet been returned 
 	 * @return a not-yet returned Identifier object
 	 * @precondition
@@ -74,17 +85,18 @@ public interface IdentifierCollectionInterface {
 	
 	/**
 	 * Removes Identifier id from the collection
-	 * @param id
+	 * @param identifier
 	 * @precondition
 	 * 	-
 	 * @postcondition
 	 * 	Identifier id is not in the collection
 	 */
-	void removeIdentifier(Identifier id);
+	void removeIdentifier(Identifier identifier);
 	
 	/**
 	 * Returns the union between two collections
-	 * @param collection
+	 * @param identifierCollection
+	 * 	The collection to use to compute the union with
 	 * @precondition
 	 * -
 	 * @postcondition
@@ -95,7 +107,8 @@ public interface IdentifierCollectionInterface {
 	
 	/**
 	 * Returns the intersection between two collections
-	 * @param collection
+	 * @param identifierCollection
+	 * 	The collection to use to compute the intersection with
 	 * @precondition
 	 * -
 	 * @postcondition
@@ -106,7 +119,8 @@ public interface IdentifierCollectionInterface {
 	
 	/**
 	 * Returns the difference between two collections
-	 * @param collection
+	 * @param identifierCollection
+	 * 	The collection to use to compute the difference with
 	 * @precondition
 	 * -
 	 * @postcondition
@@ -116,7 +130,8 @@ public interface IdentifierCollectionInterface {
 	
 	/**
 	 * Returns the symmetric difference between two collections
-	 * @param collection
+	 * @param identifierCollection
+	 * 	The collection to use to compute the symmetric difference with
 	 * @precondition
 	 * -
 	 * @postcondition
