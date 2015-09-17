@@ -50,7 +50,19 @@ public interface IdentifierCollectionInterface {
 	 * 		SUCCESS: The Identifier object is added to the collection
 	 * 		FAILURE: An Exception is thrown when the size of the collection exceeds the maximum 
 	 * 	 **/
-	void add(Identifier id) throws Exception;
+	void add(Identifier identifier) throws Exception;
+	
+	/**
+	 * Returns whether there is already a duplicate of the argument given
+	 * @param identifier
+	 * @return
+	 * @precondition
+	 * -
+	 * @postcondition
+	 * 	true: There is a duplicate
+	 * 	false: There is not a duplicate
+	 */
+	boolean isDuplicate(Identifier identifier);
 	
 	/**
 	 * Returns the size of the collection
@@ -139,7 +151,4 @@ public interface IdentifierCollectionInterface {
 	 * 	FAILURE: An Exception is thrown when the resulting collection exceeds the maximum size
 	 */
 	IdentifierCollection symmetricDifference(IdentifierCollection identifierCollection) throws Exception;
-	
-	// TODO
-	boolean contains(Identifier i); // or isDuplicate() or whatever
 }

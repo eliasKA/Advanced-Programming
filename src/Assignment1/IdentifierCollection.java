@@ -5,7 +5,8 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 
 	private Identifier[] identifierArray;
 	private int numberOfElements;
-
+	private static final String EXC_MAX_EXCEEDED = "ERROR, MAX AMOUNT OF ELEMENTS EXCEEDED";
+	
 	IdentifierCollection() {
 		init();
 	}
@@ -55,7 +56,7 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 
 	public void add(Identifier id) throws Exception {
 		if (numberOfElements >= MAX_ELEMENTS) {
-			throw new Exception("MAX AMOUNT OF ELEMENTS EXCEEDED");
+			throw new Exception(EXC_MAX_EXCEEDED);
 		}
 		
 		if (!isDuplicate(id)) {
@@ -64,7 +65,7 @@ public class IdentifierCollection implements IdentifierCollectionInterface {
 		}
 	}
 
-	private boolean isDuplicate(Identifier id) {
+	public boolean isDuplicate(Identifier id) {
 		for (int i = 0; i < numberOfElements; i++) {
 			if (identifierArray[i].equals(id)) {
 				return true;
