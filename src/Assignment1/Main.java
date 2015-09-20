@@ -147,7 +147,7 @@ public class Main {
 				throw new Exception(EXC_END_WITH_BRACKET);
 			}
 			
-			if(ignoreSpaces(input) && identifierBuffer.length() > 0){
+			if((ignoreSpaces(input) || input.hasNext(CURLY_BRACKET_CLOSE)) && identifierBuffer.length() > 0){
 				resultCollection.add(new Identifier(identifierBuffer.toString()));
 				identifierBuffer = new StringBuffer();
 				
