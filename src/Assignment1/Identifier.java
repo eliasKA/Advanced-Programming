@@ -1,5 +1,7 @@
 package Assignment1;
 
+
+
 public class Identifier implements IdentifierInterface {
 
 	private String identifier;

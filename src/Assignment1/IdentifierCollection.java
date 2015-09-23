@@ -1,6 +1,8 @@
 
 package Assignment1;
 
+
+
 public class IdentifierCollection implements IdentifierCollectionInterface {
 
 	private Identifier[] identifierArray;

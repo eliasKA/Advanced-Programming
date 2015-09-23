@@ -1,5 +1,8 @@
 package Assignment1;
 
+import Assignment1.Identifier;
+import Assignment1.IdentifierCollection;
+
 /**
  * @author 
  * 	Alae & Elias
