@@ -1,4 +1,4 @@
-package assignment2;
+package specifications;
 
 public interface Clonable<E> extends Cloneable {
 

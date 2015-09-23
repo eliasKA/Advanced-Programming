@@ -1,4 +1,4 @@
-package assignment2;
+package specifications;
 
 /**
  * 
@@ -59,6 +59,6 @@ public interface NumberInterface extends Data<NumberInterface> {
 	 * @postcondition - A deep-copy ofNumber has been returned.
 	 **/
 
-	public NumberInterface clone();
+	 NumberInterface clone();
 
 }

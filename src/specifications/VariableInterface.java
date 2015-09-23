@@ -1,4 +1,4 @@
-package assignment2;
+package specifications;
 
 /**
  * @author Alae & Elias
@@ -17,18 +17,23 @@ package assignment2;
 public interface VariableInterface {
 
 	/**
-	 * @precondition
-	 * 	-
-	 * @postcondition
-	 * 	The key of type IdentifierInterface is returned
+	 * Initializes the object with the Identifier and object parameter that is
+	 * given
+	 * 
+	 * @precondition -
+	 * @postcondition Variable key is Identifier and value is object
+	 */
+	void init(Object object);
+
+	/**
+	 * @precondition -
+	 * @postcondition The key of type IdentifierInterface is returned
 	 */
 	IdentifierInterface getKey();
 
 	/**
-	 * @precondition
-	 * 	-
-	 * @postcondition
-	 * 	The value of type Object is returned
+	 * @precondition -
+	 * @postcondition The value of type Object is returned
 	 */
 	Object getValue();
 

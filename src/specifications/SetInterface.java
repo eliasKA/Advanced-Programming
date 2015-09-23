@@ -1,4 +1,4 @@
-package assignment2;
+package specifications;
 
 /**
  * @author Alae & Elias
@@ -34,7 +34,7 @@ public interface SetInterface<E extends Data<E>> extends Clonable<SetInterface<E
 	 * @postcondition The data object is in the set
 	 * 
 	 **/
-	void add(E data) throws Exception;
+	void add(E data) ;
 
 	/**
 	 * Returns whether there is already a duplicate of the argument given

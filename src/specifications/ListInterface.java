@@ -1,4 +1,4 @@
-package assignment2;
+package specifications;
 
 /**	@elements : objects of type E
  *	@structure : lineair
