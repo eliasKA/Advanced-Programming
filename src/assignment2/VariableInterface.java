@@ -16,8 +16,20 @@ package assignment2;
  **/
 public interface VariableInterface {
 
+	/**
+	 * @precondition
+	 * 	-
+	 * @postcondition
+	 * 	The key of type IdentifierInterface is returned
+	 */
 	IdentifierInterface getKey();
 
+	/**
+	 * @precondition
+	 * 	-
+	 * @postcondition
+	 * 	The value of type Object is returned
+	 */
 	Object getValue();
 
 }
