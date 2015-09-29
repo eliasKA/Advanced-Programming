@@ -39,7 +39,7 @@ public interface IdentifierInterface extends Data<IdentifierInterface>{
 	void init(String s);
 	
 	/**
-	 * Returns whether Identifier identifier is equal to current Identifier
+	 * Returns whether the string representations of the identifiers are equal.
 	 * @param obj
 	 * 	obj of type Object that will be compared to the Identifier object.
 	 * @return whether Identifier identifier is equal to current Identifier

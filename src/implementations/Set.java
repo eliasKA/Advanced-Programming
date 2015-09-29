@@ -3,7 +3,7 @@ package implementations;
 
 import specifications.*;
 
-public class Set <E extends Data<E>>implements SetInterface<E> {
+public class Set <E extends Data<E>> implements SetInterface<E> {
 
 	@Override
 	public SetInterface<E> clone() {
@@ -66,13 +66,13 @@ public class Set <E extends Data<E>>implements SetInterface<E> {
 	}
 
 	@Override
-	public SetInterface<E> difference(SetInterface<E> set) {
+	public SetInterface<E> symmetricDifference(SetInterface<E> set) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public SetInterface<E> symmetricDifference(SetInterface<E> set) {
+	public SetInterface<E> complement(SetInterface<E> set) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -5,7 +5,7 @@ import implementations.APException;
 /**
  * @author Alae & Elias
  * @elements Variables 
- * @structure Linear 
+ * @structure none 
  * @domain -
  * @constructor VariableMap();
  *              <dl>
@@ -16,8 +16,10 @@ import implementations.APException;
  *              </dl>
  *
  **/
-public interface VariableMapInterface {
+public interface VariableMapInterface<K extends Data<K>, V extends Clonable<V>>{
 
+	String APEXCEPTION_NO_VAR = "NO SUCH VARIABLE HAS BEEN DECLARED";
+	
 	/**
 	 * Initializes the map object to the empty map
 	 * 
@@ -27,14 +29,14 @@ public interface VariableMapInterface {
 	void init();
 
 	/**
-	 * Adds a Variable object to the map
+	 * Adds a variable with key and value to the map
 	 *@precondition 
 	 * -
 	 * @postcondition 
-	 * The Variable object is in the map
+	 * 	The variable is in the map
 	 * 
 	 **/
-	void add(VariableInterface variable) ;
+	void add(K key, V value) ;
 
 	/**
 	 * Returns whether there is already a duplicate of the argument given
@@ -45,7 +47,7 @@ public interface VariableMapInterface {
 	 * 				true: There is a duplicate 
 	 * 				false: There is not a duplicate
 	 */
-	boolean isDuplicate(VariableInterface variable);
+	boolean isDuplicate(K key);
 
 	/**
 	 * Returns the size of the map
@@ -70,31 +72,21 @@ public interface VariableMapInterface {
 	boolean isEmpty();
 
 	/**
-	 * Returns an object of type Variable that has not yet been returned
+	 * Returns the value that is linked to the key
 	 * 
-	 * @return a not-yet returned Identifier object
-	 * @precondition The set is not empty
+	 * @precondition 
 	 * @postcondition 
-	 * 	 		Success :returns a variable object with the key : identifier.
-	 * 			Failure : Exception is thrown : No variable with key Identifier
+	 * 	 		Success : returns a value
+	 * 			Failure : Exception is thrown : No variable linked to key
 	 **/
-	VariableInterface getVariable(IdentifierInterface identifier) throws APException;
+	 V getVariable(K key) throws APException;
 
 	/**
-	 * Removes variable from the map
+	 * Removes variable with key from the map
 	 *
 	 * @precondition 
 	 * -
 	 * @postcondition variable with key Identifier is not in the map
 	 */
-	void removeVariable(IdentifierInterface identifier);
-
-	
-	
-	
-	
-	
-	
-	
-	
+	void removeVariable(K key);
 }

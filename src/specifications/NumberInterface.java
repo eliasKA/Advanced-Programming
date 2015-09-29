@@ -58,7 +58,6 @@ public interface NumberInterface extends Data<NumberInterface> {
 	 * @precondition -
 	 * @postcondition - A deep-copy ofNumber has been returned.
 	 **/
-
 	 NumberInterface clone();
 
 }

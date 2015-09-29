@@ -107,17 +107,6 @@ public interface SetInterface<E extends Data<E>> extends Clonable<SetInterface<E
 	SetInterface<E> intersection(SetInterface<E> set);
 
 	/**
-	 * Returns the difference between two sets
-	 * 
-	 * @param object
-	 *            of type set The set to use to compute the difference with
-	 * @precondition -
-	 * @postcondition The difference set of the current set on the parameter set
-	 *                is returned
-	 */
-	SetInterface<E> difference(SetInterface<E> set);
-
-	/**
 	 * Returns the symmetric difference between two sets
 	 * 
 	 * @param object
@@ -129,4 +118,15 @@ public interface SetInterface<E extends Data<E>> extends Clonable<SetInterface<E
 	 */
 	SetInterface<E> symmetricDifference(SetInterface<E> set);
 
+	/**
+	 * Returns the complement of the two sets
+	 * 
+	 * @param object
+	 *            of type set The set to use to compute the complement
+	 *            with
+	 * @precondition -
+	 * @postcondition the complement set is returned
+	 * 
+	 */
+	SetInterface<E> complement(SetInterface<E> set);
 }

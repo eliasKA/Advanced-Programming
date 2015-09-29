@@ -14,7 +14,7 @@ package specifications;
  *              </dl>
  *
  **/
-public interface VariableInterface {
+public interface VariableInterface<K extends Data<K>, V extends Clonable<V>> extends Data< VariableInterface<K,V> >{
 
 	/**
 	 * Initializes the object with the Identifier and object parameter that is
