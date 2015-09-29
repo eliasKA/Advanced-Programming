@@ -1,6 +1,8 @@
 package programs;
 
 import implementations.*;
+import implementations.Number;
+import specifications.NumberInterface;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -61,7 +63,7 @@ public class Parser {
 			comment(in);
 		} else if (nextCharIs(in, PRINT_STATEMENT_START)) {
 			printStatement(in);
-		} else {
+		} else {//if check  than an else throws an error example question mark 
 			assignment(in);
 		}
 	}
@@ -122,11 +124,11 @@ public class Parser {
 	}	
 
 	
-	private Set term(Scanner in) throws APException {
-		Set result, set2;
+	private Set<NumberInterface> term(Scanner in) throws APException {
+		Set<NumberInterface> result, set2;
 
 		result = factor(in);
-
+//
 		while (nextCharIs(in, INTERSECTION)) {
 			character(in, INTERSECTION);
 			set2 = factor(in);

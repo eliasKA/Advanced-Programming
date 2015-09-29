@@ -4,7 +4,7 @@ package specifications;
  * @author Alae & Elias
  * @elements objects of type Data
  * @structure none
- * @domain -
+ * @domain -no doubles
  * @constructor Set();
  *              <dl>
  *              <dt><b>PRE-condition -</b>

@@ -148,7 +148,7 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 
 	@Override
 	public ListInterface<E> clone() {
-		List<E> list = new List<E>();
+		ListInterface<E> list = new List<E>();
 
 		return list;
 	}
