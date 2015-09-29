@@ -23,7 +23,7 @@ public interface SetInterface<E extends Data<E>> extends Clonable<SetInterface<E
 	 * @precondition -
 	 * @postcondition The set is empty
 	 **/
-	void init();
+	SetInterface<E> init();
 
 	/**
 	 * Adds a data object to the set
@@ -34,7 +34,7 @@ public interface SetInterface<E extends Data<E>> extends Clonable<SetInterface<E
 	 * @postcondition The data object is in the set
 	 * 
 	 **/
-	void add(E data) ;
+	SetInterface<E> add(E data) ;
 
 	/**
 	 * Returns whether there is already a duplicate of the argument given
@@ -45,7 +45,7 @@ public interface SetInterface<E extends Data<E>> extends Clonable<SetInterface<E
 	 * @precondition -
 	 * @postcondition true: There is a duplicate false: There is not a duplicate
 	 */
-	boolean isDuplicate(E data);
+	boolean contains(E data);
 
 	/**
 	 * Returns the size of the set
@@ -82,7 +82,7 @@ public interface SetInterface<E extends Data<E>> extends Clonable<SetInterface<E
 	 * @precondition -
 	 * @postcondition Identifier id is not in the set
 	 */
-	void removeIdentifier(E data);
+	SetInterface<E> removeIdentifier(E data);
 
 	/**
 	 * Returns the union between two sets

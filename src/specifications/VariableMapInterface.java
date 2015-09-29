@@ -25,7 +25,7 @@ public interface VariableMapInterface<K extends Data<K>, V extends Clonable<V>> 
 	 * @precondition -
 	 * @postcondition The map is empty
 	 **/
-	void init();
+	VariableMapInterface<K,V> init();
 
 	/**
 	 * Adds a variable with key and value to the map
@@ -36,7 +36,7 @@ public interface VariableMapInterface<K extends Data<K>, V extends Clonable<V>> 
 	 * 	The variable is in the map
 	 * 
 	 **/
-	void add(K key, V value) ;
+	VariableMapInterface<K,V> add(K key, V value) ;
 
 	/**
 	 * Returns whether there is already a duplicate of the argument given
@@ -47,7 +47,7 @@ public interface VariableMapInterface<K extends Data<K>, V extends Clonable<V>> 
 	 * 				true: There is a duplicate 
 	 * 				false: There is not a duplicate
 	 */
-	boolean cotains(K key);
+	boolean contains(K key);
 
 	/**
 	 * Returns the size of the map
@@ -88,5 +88,5 @@ public interface VariableMapInterface<K extends Data<K>, V extends Clonable<V>> 
 	 * -
 	 * @postcondition variable with key Identifier is not in the map
 	 */
-	void removeVariable(K key);
+	 VariableMapInterface<K,V> removeVariable(K key);
 }

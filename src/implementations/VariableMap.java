@@ -1,17 +1,27 @@
 package implementations;
 
+/*
+ * inner class Variable does not have to be generic right ?
+ */
+
 import specifications.*;
 
 public class VariableMap<K extends Data<K>, V extends Clonable<V>> implements
 		VariableMapInterface<K, V> {
 
 	private class Variable implements Data<Variable>{
+		
 		K key;
 		V value;
 
 		Variable(K key, V value){
 			this.key = key;
 			this.value = value;
+		}
+		
+		Variable(K key){
+			this.key = key;
+			this.value = null;
 		}
 		
 		V getValue(){
@@ -41,54 +51,77 @@ public class VariableMap<K extends Data<K>, V extends Clonable<V>> implements
 	List<Variable> variableList;
 
 	VariableMap(){
-		init();
+		variableList = new List<Variable>();
 	}
 	
 	@Override
-	public VariableMapInterface init(){
-		variableList = new List<Variable>();
+	public VariableMapInterface<K,V> init(){
+		variableList.init();
 		return this;
 	}
 
 	@Override
-	public void add(K key, V value) {
-		if(!isDuplicate(key)){
-			variableList.insert(new Variable(key,value));
+	public VariableMapInterface<K, V> add(K key, V value) {
+		Variable var = new Variable(key,value);
+		
+		if(!contains(key)){
+			variableList.goToLast();
+			variableList.insert(var);
+		}else{
+			variableList.find(var);
+			variableList.remove();
+			variableList.insert(var);
 		}
+		
+		return this;
 	}
 
 	@Override
-	public boolean isDuplicate(K key) {
-		return false;
+	public boolean contains(K key) {
+		Variable var = new Variable(key);
+		return variableList.find(var);
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return variableList.size();
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return size() == 0;
 	}
 
 	@Override
 	public V getVariable(K key) throws APException {
-		// TODO Auto-generated method stub
-		return null;
+		Variable var = new Variable(key);
+		variableList.find(var);
+		return variableList.retrieve().value;
 	}
 
 	@Override
-	public void removeVariable(K key) {
-		// TODO Auto-generated method stub
+	public VariableMapInterface<K, V> removeVariable(K key) {
+		if(contains(key)){
+			variableList.remove();
+		}
 
+		
+		return this;
 	}
 
 	public VariableMap<K, V> clone() {
-		return null;
-
+		VariableMap<K, V> clone = null;
+		
+		try {
+			clone = (VariableMap<K, V>) super.clone();
+			clone.variableList = (List<VariableMap<K, V>.Variable>) variableList.clone();
+			
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return clone;
 	}
 
 }
