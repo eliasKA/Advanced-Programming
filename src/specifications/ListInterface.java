@@ -62,10 +62,10 @@ public interface ListInterface<E extends Data<E>> extends Clonable<ListInterface
 
 	/** @precondition  - 
 	 *	@postcondition - TRUE:  list contains a copy of d.
-	 *	     			current-POST points to the first element in list that
-	 *	     			contains a copy of d.
-	 *     				FALSE: list does not contain a copy of d.
-	 *	     			current-POST points to
+	 *	     			 current-POST points to the first element in list that
+	 *	     			 contains a copy of d.
+	 *     				 FALSE: list does not contain a copy of d.
+	 *	     			 current-POST points to
 	 *	      				- if list-POST is empty
 	 *                    		null
 	 *	      				- if the first element in list > d:
