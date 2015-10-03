@@ -31,8 +31,7 @@ public class Identifier implements IdentifierInterface {
 			return false;
 		}
 
-		Identifier identifierObj = (Identifier) obj;
-		return identifierObj.idString.equals(idString) ? true : false;
+		return toString().equals(obj.toString()) ? true : false;
 	}
 
 	@Override
@@ -40,4 +39,7 @@ public class Identifier implements IdentifierInterface {
 		idString = identifier;
 	}
 
+	public String toString(){
+		return idString;
+	}
 }

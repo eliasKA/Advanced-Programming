@@ -50,7 +50,7 @@ public class Parser {
 	}
 
 	private void program(Scanner in) throws APException {
-			statement(in);
+		statement(in);
 	}
 
 	private void statement(Scanner in) throws APException {
@@ -78,6 +78,7 @@ public class Parser {
 	}
 
 	private void printStatement(Scanner in) throws APException {
+		character(in, PRINT_STATEMENT_START);
 		out.println(expression(in).toString());
 		eoln(in);
 	}

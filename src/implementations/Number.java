@@ -37,8 +37,10 @@ public class Number implements NumberInterface{
 
 	@Override
 	public NumberInterface clone() {
-
 		return new Number(numberString);
 	}
 
+	public String toString(){
+		return numberString;
+	}
 }

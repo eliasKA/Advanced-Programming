@@ -139,4 +139,17 @@ public class Set<E extends Data<E>> implements SetInterface<E> {
 		return result;
 	}
 
+	public String toString(){
+		StringBuffer result = new StringBuffer();
+		SetInterface<E> clone = clone();
+		
+		result.append('{');
+		while(!clone.isEmpty()){
+			result.append(clone.getElement());
+		}
+		result.append('}');
+		
+		return result.toString();	
+	}
+	
 }
