@@ -6,9 +6,9 @@ package specifications;
  * 
  * @elements Number: characters of type char
  * @structure linear
- * @domain elements in the number have to be digits
- * 
- *         number must contain a minimum of 1 digit
+ * @domain 		Elements in the number have to be digits. 
+ * 				The number can not begin with the digit '0'. 
+ *        		Number must contain a minimum of 1 digit
  * @constructor Number(String numberString);
  *              <dl>
  *              <dt><b>PRE-condition -</b>
@@ -51,13 +51,6 @@ public interface NumberInterface extends Data<NumberInterface> {
 	 * @preconditions -
 	 * @postcondition String representation of the Number object is printed
 	 **/
-
 	String toString();
-
-	/**
-	 * @precondition -
-	 * @postcondition - A deep-copy ofNumber has been returned.
-	 **/
-	 NumberInterface clone();
 
 }

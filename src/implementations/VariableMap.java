@@ -1,9 +1,5 @@
 package implementations;
 
-/*
- * inner class Variable does not have to be generic right ?
- */
-
 import specifications.*;
 
 public class VariableMap<K extends Data<K>, V extends Clonable<V>> implements
@@ -23,18 +19,6 @@ public class VariableMap<K extends Data<K>, V extends Clonable<V>> implements
 			this.key = key;
 			this.value = null;
 		}
-		
-		V getValue(){
-			return value;
-		}
-		
-		K getKey(){
-			return key;
-		}
-		
-		void setValue(V value){
-			this.value = value;
-		}
 
 		@Override
 		public Variable clone() {
@@ -50,7 +34,7 @@ public class VariableMap<K extends Data<K>, V extends Clonable<V>> implements
 
 	List<Variable> variableList;
 
-	VariableMap(){
+	public VariableMap(){
 		variableList = new List<Variable>();
 	}
 	
@@ -68,9 +52,7 @@ public class VariableMap<K extends Data<K>, V extends Clonable<V>> implements
 			variableList.goToLast();
 			variableList.insert(var);
 		}else{
-			variableList.find(var);
-			variableList.remove();
-			variableList.insert(var);
+			variableList.retrieve().value = value;
 		}
 		
 		return this;
@@ -93,7 +75,7 @@ public class VariableMap<K extends Data<K>, V extends Clonable<V>> implements
 	}
 
 	@Override
-	public V getVariable(K key) throws APException {
+	public V getValue(K key){
 		Variable var = new Variable(key);
 		variableList.find(var);
 		return variableList.retrieve().value;
@@ -104,22 +86,12 @@ public class VariableMap<K extends Data<K>, V extends Clonable<V>> implements
 		if(contains(key)){
 			variableList.remove();
 		}
-
-		
 		return this;
 	}
 
 	public VariableMap<K, V> clone() {
-		VariableMap<K, V> clone = null;
-		
-		try {
-			clone = (VariableMap<K, V>) super.clone();
-			clone.variableList = (List<VariableMap<K, V>.Variable>) variableList.clone();
-			
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		VariableMap<K, V> clone = new VariableMap<K, V>();
+		clone.variableList = (List<VariableMap<K, V>.Variable>) variableList.clone();
 		
 		return clone;
 	}

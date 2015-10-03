@@ -4,7 +4,7 @@ package specifications;
  * @author Alae & Elias
  * @elements objects of type Data
  * @structure none
- * @domain -no doubles
+ * @domain -unique elements
  * @constructor Set();
  *              <dl>
  *              <dt><b>PRE-condition -</b>
@@ -82,7 +82,7 @@ public interface SetInterface<E extends Data<E>> extends Clonable<SetInterface<E
 	 * @precondition -
 	 * @postcondition Identifier id is not in the set
 	 */
-	SetInterface<E> removeIdentifier(E data);
+	SetInterface<E> remove(E data);
 
 	/**
 	 * Returns the union between two sets

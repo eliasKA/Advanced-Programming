@@ -2,44 +2,43 @@ package implementations;
 
 import specifications.*;
 
-public class Set <E extends Data<E>> implements SetInterface<E> {
+public class Set<E extends Data<E>> implements SetInterface<E> {
 
 	ListInterface<E> dataList;
-	
-	Set(){
-		dataList = new List<E>(); 
+
+	public Set() {
+		init();
+		//Returns!
 	}
-	
+
 	@Override
 	public SetInterface<E> clone() {
 		Set<E> clone = null;
-		
+
 		try {
 			clone = (Set<E>) super.clone();
 			clone.dataList = dataList.clone();
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 
 		return clone;
 	}
 
 	@Override
 	public SetInterface<E> init() {
-		dataList = dataList.init();
-		return this;	
+		dataList = new List<E>();
+		return this;
 	}
 
 	@Override
 	public SetInterface<E> add(E data) {
-		if(contains(data)){
+		if (contains(data)) {
 			// do nothing
-		}else{
+		} else {
 			dataList.insert(data);
 		}
-		
+
 		return this;
 	}
 
@@ -65,48 +64,79 @@ public class Set <E extends Data<E>> implements SetInterface<E> {
 		dataList.remove();
 		return element;
 	}
-
+	
 	@Override
-	public SetInterface<E> removeIdentifier(E data) {
-		if(dataList.find(data)){
+	public SetInterface<E> remove(E data) {
+		if (dataList.find(data)) {
 			dataList.remove();
 		}
-		
+
 		return this;
 	}
 
 	@Override
 	public SetInterface<E> union(SetInterface<E> set) {
-		Set<E> result = (Set<E>)this.clone();
+		SetInterface<E> result = this.clone();
 		SetInterface<E> set2 = set.clone();
-		
-		return result.addSet(set2);
-	}
-	
-	private SetInterface<E> addSet(SetInterface<E> set){
-		while(!set.isEmpty()){
-			add(set.getElement());
+
+		while (!set2.isEmpty()) {
+			result.add(set2.getElement());
 		}
-		
-		return this;
+
+		return result;
 	}
 
 	@Override
 	public SetInterface<E> intersection(SetInterface<E> set) {
-		// TODO Auto-generated method stub
-		return null;
+		SetInterface<E> result = new Set<E>();
+
+		SetInterface<E> set2 = set.clone();
+
+		E data;
+		while (!set2.isEmpty()) {
+			data = set2.getElement();
+			if (this.contains(data)) {
+				result.add(data);
+			}
+		}
+
+		return result;
 	}
 
 	@Override
 	public SetInterface<E> symmetricDifference(SetInterface<E> set) {
-		// TODO Auto-generated method stub
-		return null;
+		SetInterface<E> result = this.clone();
+		SetInterface<E> set2 = set.clone();
+
+		E data;
+		while (!set2.isEmpty()) {
+			data = set2.getElement();
+
+			if (result.contains(data)) {
+				result.remove(data);
+			} else {
+				result.add(data);
+			}
+		}
+
+		return result;
 	}
 
 	@Override
 	public SetInterface<E> complement(SetInterface<E> set) {
-		// TODO Auto-generated method stub
-		return null;
+		SetInterface<E> result = this.clone();
+		SetInterface<E> set2 = set.clone();
+
+		E data;
+		while (!set2.isEmpty()) {
+			data = set2.getElement();
+
+			if (result.contains(data)) {
+				result.remove(data);
+			}
+		}
+
+		return result;
 	}
 
 }

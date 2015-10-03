@@ -16,12 +16,9 @@ public class Identifier implements IdentifierInterface {
 		return new Identifier(idString);
 	}
 
-	@Override // ????
+	@Override
 	public int compareTo(IdentifierInterface identifier) {
-		if (idString.equals(identifier.toString()))
-			return 0;
-		else
-			return 1;
+		return toString().compareTo(identifier.toString());
 	}
 
 	@Override

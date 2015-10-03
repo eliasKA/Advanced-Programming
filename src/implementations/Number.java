@@ -2,17 +2,19 @@ package implementations;
 
 import specifications.NumberInterface;
 
-public class Number implements NumberInterface {
+public class Number implements NumberInterface{
 	private String numberString;
 
 	public Number(String number) {
 		init(number);
 	}
 
-	@Override//????
-	public int compareTo(NumberInterface o) {
-		// TODO Auto-generated method stub
-		return 0;
+	@Override
+	public int compareTo(NumberInterface number) {
+		int x = Integer.parseInt(toString());
+		int y = Integer.parseInt(number.toString());
+		
+		return Integer.compare(x, y);
 	}
 
 	@Override

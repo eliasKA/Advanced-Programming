@@ -5,6 +5,7 @@ import implementations.APException;
 /**
  * @author Alae & Elias
  * @elements Variables of K V
+ * @structure none
  * @domain - key is unique
  * @constructor VariableMap();
  *              <dl>
@@ -15,9 +16,8 @@ import implementations.APException;
  *              </dl>
  *
  **/
-public interface VariableMapInterface<K extends Data<K>, V extends Clonable<V>> extends Clonable<VariableMapInterface>{
+public interface VariableMapInterface<K extends Data<K>, V extends Clonable<V>> extends Clonable<VariableMapInterface<K, V>>{
 
-	String APEXCEPTION_NO_VAR = "NO SUCH VARIABLE HAS BEEN DECLARED";
 	
 	/**
 	 * Initializes the map object to the empty map
@@ -29,11 +29,9 @@ public interface VariableMapInterface<K extends Data<K>, V extends Clonable<V>> 
 
 	/**
 	 * Adds a variable with key and value to the map
-	 *@precondition 
-	 * -no key in the same map 
-	 * exception ??
-	 * @postcondition 
-	 * 	The variable is in the map
+	 *@precondition  -
+	 *@postcondition 
+	 * 	The variable is in the map overwrite !
 	 * 
 	 **/
 	VariableMapInterface<K,V> add(K key, V value) ;
@@ -79,7 +77,7 @@ public interface VariableMapInterface<K extends Data<K>, V extends Clonable<V>> 
 	 * 	 		Success : returns a value coresponds to the key
 	 * 			Failure : Exception is thrown : No variable linked to key
 	 **/
-	 V getVariable(K key) throws APException;
+	 V getValue(K key) throws APException;
 
 	/**
 	 * Removes variable with key from the map

@@ -4,7 +4,7 @@ package specifications;
  * @author Alae & Elias
  * @elements key of type Identifier value of type Object
  * @structure none
- * @domain -
+ * @domain 
  * @constructor Variable(IdentifierInterface identifier,Object object);
  *              <dl>
  *              <dt><b>PRE-condition -</b>
@@ -23,18 +23,6 @@ public interface VariableInterface<K extends Data<K>, V extends Clonable<V>> ext
 	 * @precondition -
 	 * @postcondition Variable key is Identifier and value is object
 	 */
-	void init(Object object);
-
-	/**
-	 * @precondition -
-	 * @postcondition The key of type IdentifierInterface is returned
-	 */
-	IdentifierInterface getKey();
-
-	/**
-	 * @precondition -
-	 * @postcondition The value of type Object is returned
-	 */
-	Object getValue();
+	void init(K key, V value);
 
 }
