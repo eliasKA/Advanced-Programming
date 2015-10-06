@@ -39,6 +39,7 @@ public class Set<E extends Data<E>> implements SetInterface<E> {
 			dataList.insert(data);
 		}
 
+		dataList.insert(data);
 		return this;
 	}
 

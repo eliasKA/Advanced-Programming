@@ -5,7 +5,6 @@ import specifications.*;
 public class List<E extends Data<E>> implements ListInterface<E> {
 
 	private int numberOfElement;
-
 	private Node last, first, current;
 
 	public List() {
@@ -21,6 +20,7 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 	public ListInterface<E> init() {
 		first = last = null;
 		current = first;
+		numberOfElement = 0;
 		return this;
 	}
 
@@ -32,50 +32,34 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 
 	@Override
 	public ListInterface<E> insert(E d) {
+		find(d);
 		
-		Node node = new Node(d.clone());
 		if (isEmpty()) {
 			// case : empty set
-			node.next = node.prior = null;
-			first = last = node;
-
+			current = first = last = new Node(d.clone());
 		} else if (current.next == null) {
-			// case: after last
-			node.next = last.next;
-			node.prior = last;
-			last.next = node;
-
-			last = node;
+			current = current.next = new Node(d.clone(), current, null);
 		} else if (current == null) {
-			// before first
-			node.prior = first.prior;
-			node.next = first;
-			first.prior = node;
-
-			first = node;
+			//in this case the data has to be inserted at the front
+			current = first = first.prior = new Node(d.clone(), null, first);			
 		} else {
-			// in between
-			node.next = current.next;
-			node.prior = current;
-			current.next = current.next.prior = node;
+			current = current.next.prior = current.next = new Node(d.clone(), current, current.next);
 		}
+
 		numberOfElement += 1;
 		return this;
 	}
 
 	@Override
 	public E retrieve() {
-
 		return current.data;
 	}
 
 	@Override
 	public ListInterface<E> remove() {
-		if (current.next == null && current.prior == null) {
+		if (isEmpty()) {
 			current = null;
-		}
-
-		else if (current.next == null) {
+		} else if (current.next == null) {
 			current.prior.next = null;
 			current = current.prior;
 
@@ -88,32 +72,28 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 			current.prior.next = current.next;
 			current = current.next;
 		}
-		numberOfElement -=1;
+		numberOfElement -= 1;
 		return this;
 	}
 
 	@Override
 	public boolean find(E d) {
-	
-		
-		if(isEmpty()){
+
+		if (isEmpty()) {
 			current = null;
 			return false;
-			}
-		
+		}
+
 		goToFirst();
-		
-		while(current.next!=null){
-			if(current.data.equals(d)){
+		while (current != null && current.data.compareTo(d) < 0) {
+			if (current.data.equals(d)) {
 				return true;
 			}
 			goToNext();
 		}
-		if(first.data.compareTo(d)>0){
-			current=first;
-		}
-		else 
-			current=last;
+		goToPrevious();
+
+		return false;
 	}
 
 	@Override
@@ -140,7 +120,7 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 	@Override
 	public boolean goToPrevious() {
 		if (!isEmpty() && current.prior != null) {
-			current = current.next;
+			current = current.prior;
 			return true;
 		}
 		return false;
@@ -149,7 +129,9 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 	@Override
 	public ListInterface<E> clone() {
 		ListInterface<E> list = new List<E>();
+		while (!isEmpty()) {
 
+		}
 		return list;
 	}
 	// Inner class for the implementation of the List class.
