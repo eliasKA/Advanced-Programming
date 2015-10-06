@@ -5,6 +5,7 @@ import specifications.*;
 public class List<E extends Data<E>> implements ListInterface<E> {
 
 	private int numberOfElement;
+
 	private Node last, first, current;
 
 	public List() {
@@ -33,15 +34,18 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 	@Override
 	public ListInterface<E> insert(E d) {
 		find(d);
-		
+
 		if (isEmpty()) {
 			// case : empty set
 			current = first = last = new Node(d.clone());
 		} else if (current.next == null) {
-			current = current.next = new Node(d.clone(), current, null);
-		} else if (current == null) {
-			//in this case the data has to be inserted at the front
-			current = first = first.prior = new Node(d.clone(), null, first);			
+			last=current = current.next = new Node(d.clone(), current, null);
+		} else if (current.prior == null) {
+			if (current.data.compareTo(d) > 0) // in this case the data has to
+												// be inserted at the front
+				first=current= new Node(d.clone(), null, first);
+			else
+				current = current.next.prior = current.next = new Node(d.clone(), current, current.next);
 		} else {
 			current = current.next.prior = current.next = new Node(d.clone(), current, current.next);
 		}
@@ -52,7 +56,8 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 
 	@Override
 	public E retrieve() {
-		return current.data;
+
+		return current.data.clone();
 	}
 
 	@Override
@@ -85,14 +90,15 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 		}
 
 		goToFirst();
-		while (current != null && current.data.compareTo(d) < 0) {
+
+		do {
 			if (current.data.equals(d)) {
 				return true;
 			}
-			goToNext();
-		}
-		goToPrevious();
 
+		} while (goToNext() && current.data.compareTo(d) <= 0);
+		if (current.data.compareTo(d) > 0)
+			goToPrevious();
 		return false;
 	}
 
@@ -129,9 +135,13 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 	@Override
 	public ListInterface<E> clone() {
 		ListInterface<E> list = new List<E>();
-		while (!isEmpty()) {
+		if (goToFirst()) {
+			do {
 
+				list.insert(current.data.clone());
+			} while (goToNext());
 		}
+
 		return list;
 	}
 	// Inner class for the implementation of the List class.
@@ -153,3 +163,4 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 
 	}
 }
+
