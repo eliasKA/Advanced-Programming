@@ -38,16 +38,12 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 		if (isEmpty()) {
 			// case : empty set
 			current = first = last = new Node(d.clone());
-		} else if (current.next == null) {
-			last=current = current.next = new Node(d.clone(), current, null);
-		} else if (current.prior == null) {
-			if (current.data.compareTo(d) > 0) // in this case the data has to
-												// be inserted at the front
-				first=current= new Node(d.clone(), null, first);
-			else
-				current = current.next.prior = current.next = new Node(d.clone(), current, current.next);
+		} else if (current == first && current.data.compareTo(d) > 0) {
+			current = first = first.prior = new Node(d.clone(), null, first);
+		} else if (current == last) {
+			last = current = current.next = new Node(d.clone(), current, null);
 		} else {
-			current = current.next.prior = current.next = new Node(d.clone(), current, current.next);
+			current = current.next = current.next.prior = new Node(d.clone(), current, current.next);
 		}
 
 		numberOfElement += 1;
@@ -62,21 +58,22 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 
 	@Override
 	public ListInterface<E> remove() {
-		if (isEmpty()) {
-			current = null;
-		} else if (current.next == null) {
+		if(isEmpty()){
+			return this;
+		}else if (size() == 1) {
+			last = first = current = null;
+		} else if (current == last) {
 			current.prior.next = null;
-			current = current.prior;
-
-		} else if (current.prior == null) {
+			last = current = current.prior;
+		} else if (current == first) {
 			current.next.prior = null;
-			current = current.next;
-		} else {
-			// in between
+			first = current = current.next;
+		} else{
 			current.next.prior = current.prior;
 			current.prior.next = current.next;
 			current = current.next;
 		}
+		
 		numberOfElement -= 1;
 		return this;
 	}
@@ -135,10 +132,11 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 	@Override
 	public ListInterface<E> clone() {
 		ListInterface<E> list = new List<E>();
-		if (goToFirst()) {
+		if (!isEmpty()) {
+			goToFirst();
 			do {
 
-				list.insert(current.data.clone());
+				list.insert(retrieve());
 			} while (goToNext());
 		}
 
@@ -163,4 +161,3 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 
 	}
 }
-

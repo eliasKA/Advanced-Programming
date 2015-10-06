@@ -13,14 +13,9 @@ public class Set<E extends Data<E>> implements SetInterface<E> {
 
 	@Override
 	public SetInterface<E> clone() {
-		Set<E> clone = null;
+		Set<E> clone = new Set<E>();
+		clone.dataList = dataList.clone();
 
-		try {
-			clone = (Set<E>) super.clone();
-			clone.dataList = dataList.clone();
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
 
 		return clone;
 	}
@@ -34,9 +29,7 @@ public class Set<E extends Data<E>> implements SetInterface<E> {
 	@Override
 	public SetInterface<E> add(E data) {
 		if (contains(data)) {
-			// do nothing
-		} else {
-			dataList.insert(data);
+			return this;
 		}
 
 		dataList.insert(data);
@@ -146,7 +139,8 @@ public class Set<E extends Data<E>> implements SetInterface<E> {
 		
 		result.append('{');
 		while(!clone.isEmpty()){
-			result.append(clone.getElement());
+			result.append(clone.getElement().toString());
+			result.append(',');
 		}
 		result.append('}');
 		
