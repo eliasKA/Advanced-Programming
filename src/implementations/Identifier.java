@@ -30,7 +30,7 @@ public class Identifier implements IdentifierInterface {
 		} else if (obj.getClass() != getClass()) {
 			return false;
 		}
-
+		
 		return toString().equals(obj.toString()) ? true : false;
 	}
 

@@ -11,10 +11,10 @@ public class Number implements NumberInterface{
 
 	@Override
 	public int compareTo(NumberInterface number) {
-		int x = Integer.parseInt(toString());
-		int y = Integer.parseInt(number.toString());
+		double x = Double.parseDouble(toString());
+		double y = Double.parseDouble(number.toString());
 		
-		return Integer.compare(x, y);
+		return Double.compare(x, y);
 	}
 
 	@Override

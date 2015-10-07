@@ -5,6 +5,8 @@ import specifications.*;
 public class VariableMap<K extends Data<K>, V extends Clonable<V>> implements
 		VariableMapInterface<K, V> {
 
+	private static final String EXC_NO_VAR ="No variable with name: ";
+	
 	private class Variable implements Data<Variable>{
 		
 		K key;
@@ -19,7 +21,7 @@ public class VariableMap<K extends Data<K>, V extends Clonable<V>> implements
 			this.key = key;
 			this.value = null;
 		}
-
+		
 		@Override
 		public Variable clone() {
 			return new Variable(key.clone(),value.clone());
@@ -28,6 +30,20 @@ public class VariableMap<K extends Data<K>, V extends Clonable<V>> implements
 		@Override
 		public int compareTo(Variable var) {
 			return key.compareTo(var.key);
+		}
+		
+		@Override
+		public boolean equals(Object obj){
+			if (obj == null) {
+				return false;
+			} else if (obj == this) {
+				return true;
+			} else if (obj.getClass() != getClass()) {
+				return false;
+			}
+			
+			Variable var = (Variable)obj;
+			return  key.equals(var.key);
 		}
 		
 	}
@@ -49,7 +65,6 @@ public class VariableMap<K extends Data<K>, V extends Clonable<V>> implements
 		Variable var = new Variable(key,value);
 		
 		if(!contains(key)){
-			variableList.goToLast();
 			variableList.insert(var);
 		}else{
 			variableList.retrieve().value = value;
@@ -75,10 +90,13 @@ public class VariableMap<K extends Data<K>, V extends Clonable<V>> implements
 	}
 
 	@Override
-	public V getValue(K key){
+	public V getValue(K key) throws APException{
 		Variable var = new Variable(key);
-		variableList.find(var);
-		return variableList.retrieve().value;
+		if(variableList.find(var)){
+			return variableList.retrieve().value;
+		}else{
+			throw new APException(EXC_NO_VAR + key.toString());
+		}
 	}
 
 	@Override

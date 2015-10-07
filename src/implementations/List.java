@@ -92,10 +92,11 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 			if (current.data.equals(d)) {
 				return true;
 			}
-
 		} while (goToNext() && current.data.compareTo(d) <= 0);
+		
 		if (current.data.compareTo(d) > 0)
 			goToPrevious();
+		
 		return false;
 	}
 
