@@ -10,15 +10,34 @@ import java.util.regex.Pattern;
 
 public class Parser {
 
-	private static final char PRINT_STATEMENT_START = '?', COMMENT_START = '/',
-			EQUALS_SIGN = '=', UNION = '+', SYMM_DIFFERENCE = '|',
-			COMPLEMENT = '-', INTERSECTION = '*', CURLY_BRACKET_OPEN = '{',
-			CURLY_BRACKET_CLOSE = '}', BRACKET_OPEN = '(', BRACKET_CLOSE = ')',
+	private static final char 
+			PRINT_STATEMENT_START = '?', 
+			COMMENT_START = '/',
+			EQUALS_SIGN = '=', 
+			UNION = '+', 
+			SYMM_DIFFERENCE = '|',
+			COMPLEMENT = '-', 
+			INTERSECTION = '*', 
+			CURLY_BRACKET_OPEN = '{',
+			CURLY_BRACKET_CLOSE = '}', 
+			BRACKET_OPEN = '(', 
+			BRACKET_CLOSE = ')',
 			COMMA = ',';
 
-	private static final String INPUT_ERROR = "INPUT_ERROR ",
-			END_PROGRAM = "PROGRAM TERMINATED", EMPTY_STRING = "", SPACE = " ",
-			EXC_EOLN = "No line found", EXC_EMPTY_INPUT = "ERROR: EMPTY INPUT";
+	private static final String 
+			EXC_INPUT_ERROR = "Error on input. ",
+			MSG_END_PROGRAM = "~PROGRAM TERMINATED~", 
+			EMPTY_STRING = "", 
+			SPACE = " ",
+			EXC_END_PROGRAM = "No line found", 
+			EXC_EMPTY_INPUT = "Error, empty input-line. ",
+			EXC_ON_CHAR = "Input error at: ",
+			EXC_EXPECTED = "Expected: ",
+			EOLN = "End of line",
+			EXC_INVALID_OPERATOR = "Input error, invalid operator: ",
+			LETTER = "Letter (A-Z,a-z).",
+			NUMBER = "Natural number.",
+			NON_ZERO = "Non-zero digit (1-9).";
 
 	PrintStream out;
 	VariableMap<IdentifierInterface, SetInterface<NumberInterface>> varMap;
@@ -34,7 +53,7 @@ public class Parser {
 		String inputLine;
 		Scanner lineScanner;
 
-		do {
+		while(true){
 			try {
 				inputLine = in.nextLine();
 
@@ -46,7 +65,7 @@ public class Parser {
 				endProgram(e);
 				out.println(e.getMessage());
 			}
-		} while(true);
+		}
 	}
 
 	private void printSet(SetInterface<NumberInterface> set) {
@@ -86,13 +105,17 @@ public class Parser {
 
 	private void statement(Scanner in) throws APException {
 		ignoreSpaces(in);
+		
 		if (nextCharIs(in, COMMENT_START)) {
 			comment(in);
 		} else if (nextCharIs(in, PRINT_STATEMENT_START)) {
 			printStatement(in);
-		} else {// if check than an else throws an error example question mark
+		} else if (nextCharIsLetter(in)){
 			assignment(in);
+		} else {
+			throw new APException(EXC_INPUT_ERROR);
 		}
+		
 		ignoreSpaces(in);
 	}
 
@@ -122,7 +145,7 @@ public class Parser {
 
 	private void eoln(Scanner in) throws APException {
 		if (in.hasNext()) {
-			throw new APException(INPUT_ERROR);
+			throw new APException(EXC_ON_CHAR + in.next() + SPACE + EXC_EXPECTED + EOLN);
 		}
 	}
 
@@ -185,7 +208,7 @@ public class Parser {
 		} else if (nextCharIs(in, SYMM_DIFFERENCE)) {
 			return nextChar(in);
 		} else {
-			throw new APException(INPUT_ERROR);
+			throw new APException(EXC_INVALID_OPERATOR + in.next());
 		}
 	}
 
@@ -228,8 +251,10 @@ public class Parser {
 	private char letter(Scanner in) throws APException {
 		if (nextCharIsLetter(in)) {
 			return nextChar(in);
-		} else {
-			throw new APException(INPUT_ERROR);
+		} else if(in.hasNext()){
+			throw new APException(EXC_ON_CHAR + in.next() + SPACE + EXC_EXPECTED + LETTER);
+		} else{
+			throw new APException(EXC_INPUT_ERROR + EXC_EXPECTED + LETTER);
 		}
 	}
 
@@ -254,8 +279,10 @@ public class Parser {
 			return zero(in);
 		} else if (nextCharIsNotZero(in)) {
 			return notZero(in);
-		} else {
-			throw new APException(INPUT_ERROR);
+		} else if(in.hasNext()){
+			throw new APException(EXC_ON_CHAR + in.next() + SPACE + EXC_EXPECTED + NUMBER);
+		} else{
+			throw new APException(EXC_INPUT_ERROR + EXC_EXPECTED + NUMBER);
 		}
 	}
 
@@ -270,8 +297,10 @@ public class Parser {
 	private char notZero(Scanner in) throws APException {
 		if (nextCharIsNotZero(in)) {
 			return nextChar(in);
-		} else {
-			throw new APException(INPUT_ERROR);
+		} else if(in.hasNext()){
+			throw new APException(EXC_ON_CHAR + in.next() + SPACE + EXC_EXPECTED + NON_ZERO);
+		} else{
+			throw new APException(EXC_INPUT_ERROR + EXC_EXPECTED + NON_ZERO);
 		}
 	}
 
@@ -329,8 +358,10 @@ public class Parser {
 	}
 
 	private char character(Scanner in, char c) throws APException {
-		if (!nextCharIs(in, c)) {
-			throw new APException(INPUT_ERROR);
+		if (!in.hasNext()) {
+			throw new APException(EXC_INPUT_ERROR + EXC_EXPECTED + c);
+		}else if (!nextCharIs(in, c)) {
+			throw new APException(EXC_ON_CHAR + in.next() + SPACE + EXC_EXPECTED + c);
 		} else {
 			return nextChar(in);
 		}
@@ -347,16 +378,15 @@ public class Parser {
 	private void endProgram(Exception e) {
 		// Checks if ctrl-d/ctrl-z has been pressed causing the console to close
 
-		if (e.getMessage().equals(EXC_EOLN)) {
+		if (EXC_END_PROGRAM.equals(e.getMessage())) {
 			out.println();
-			out.println(END_PROGRAM);
+			out.println(MSG_END_PROGRAM);
 
 			System.exit(1);
 		}
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		new Parser().start();
 	}
 
