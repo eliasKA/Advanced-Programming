@@ -62,10 +62,10 @@ public class Parser {
 
 				program(lineScanner);
 			} catch (APException e) {
-				//endProgram(e);
 				out.println(e.getMessage());
 			}
 		}
+		
 		out.println(MSG_END_PROGRAM);
 	}
 
@@ -375,18 +375,7 @@ public class Parser {
 	private boolean nextCharIs(Scanner in, char c) {
 		return in.hasNext(Pattern.quote(c + ""));
 	}
-
-	private void endProgram(Exception e) {
-		// Checks if ctrl-d/ctrl-z has been pressed causing the console to close
-
-		if (EXC_END_PROGRAM.equals(e.getMessage())) {
-			out.println();
-			out.println(MSG_END_PROGRAM);
-
-			System.exit(1);
-		}
-	}
-
+	
 	public static void main(String[] args) {
 		new Parser().start();
 	}
