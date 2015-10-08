@@ -18,10 +18,10 @@ public class Parser {
 			SYMM_DIFFERENCE = '|',
 			COMPLEMENT = '-', 
 			INTERSECTION = '*', 
-			CURLY_BRACKET_OPEN = '{',
-			CURLY_BRACKET_CLOSE = '}', 
-			BRACKET_OPEN = '(', 
-			BRACKET_CLOSE = ')',
+			START_OF_SET = '{',
+			END_OF_SET = '}', 
+			START_COMPLEX_FACTOR = '(', 
+			END_COMPLEX_FACTOR = ')',
 			COMMA = ',';
 
 	private static final String 
@@ -53,7 +53,7 @@ public class Parser {
 		String inputLine;
 		Scanner lineScanner;
 
-		while(true){
+		while(in.hasNextLine()){
 			try {
 				inputLine = in.nextLine();
 
@@ -61,25 +61,26 @@ public class Parser {
 				lineScanner.useDelimiter(EMPTY_STRING);
 
 				program(lineScanner);
-			} catch (Exception e) {
-				endProgram(e);
+			} catch (APException e) {
+				//endProgram(e);
 				out.println(e.getMessage());
 			}
 		}
+		out.println(MSG_END_PROGRAM);
 	}
 
 	private void printSet(SetInterface<NumberInterface> set) {
 		SetInterface<?> cloneSet = set.clone();
 		StringBuffer result = new StringBuffer();
 
-		result.append(CURLY_BRACKET_OPEN);
+		result.append(START_OF_SET);
 		while (!cloneSet.isEmpty()) {
 			result.append(cloneSet.getElement().toString());
 			if (!cloneSet.isEmpty()) {
 				result.append(COMMA);
 			}
 		}
-		result.append(CURLY_BRACKET_CLOSE);
+		result.append(END_OF_SET);
 
 		out.println(result);
 	}
@@ -213,9 +214,9 @@ public class Parser {
 	}
 
 	private SetInterface<NumberInterface> factor(Scanner in) throws APException {
-		if (nextCharIs(in, CURLY_BRACKET_OPEN)) {
+		if (nextCharIs(in, START_OF_SET)) {
 			return set(in);
-		} else if (nextCharIs(in, BRACKET_OPEN)) {
+		} else if (nextCharIs(in, START_COMPLEX_FACTOR)) {
 			return complexFactor(in);
 		} else {
 			return varMap.getValue(identifier(in));
@@ -227,24 +228,24 @@ public class Parser {
 			throws APException {
 		SetInterface<NumberInterface> result;
 
-		character(in, BRACKET_OPEN);
+		character(in, START_COMPLEX_FACTOR);
 		ignoreSpaces(in);
 
 		result = expression(in);
 		ignoreSpaces(in);
 
-		character(in, BRACKET_CLOSE);
+		character(in, END_COMPLEX_FACTOR);
 		return result;
 	}
 
 	private SetInterface<NumberInterface> set(Scanner in) throws APException {
-		character(in, CURLY_BRACKET_OPEN);
+		character(in, START_OF_SET);
 		ignoreSpaces(in);
 
 		SetInterface<NumberInterface> result = rowOfNaturalNumbers(in);
 		ignoreSpaces(in);
 
-		character(in, CURLY_BRACKET_CLOSE);
+		character(in, END_OF_SET);
 		return result;
 	}
 
