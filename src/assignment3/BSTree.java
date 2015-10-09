@@ -20,19 +20,19 @@ public class BSTree<E extends Data<E>> implements BSTreeInterface<E> {
 		list = new ArrayList<E>();
 		return this;
 	}
-
+	
 	@Override
 	public Iterator<E> ascendingIterator() {
 		list.clear();
 		makeAscending(root);
-		return list.iterator();
+		return list.listIterator();
 	}
 
 	@Override
 	public Iterator<E> descendingIterator() {
 		list.clear();
 		makeDescending(root);
-		return list.iterator();
+		return list.listIterator();
 	}
 
 	private void makeAscending(Node subRoot) {
@@ -48,9 +48,10 @@ public class BSTree<E extends Data<E>> implements BSTreeInterface<E> {
 		if (subRoot == null)
 			return;
 		else {
-			makeAscending(subRoot.rightChild);
+			makeDescending(subRoot.rightChild);
 			list.add(subRoot.data);
-			makeAscending(subRoot.leftChild);
+			makeDescending(subRoot.leftChild);
+			
 		}
 	}
 
@@ -81,14 +82,12 @@ public class BSTree<E extends Data<E>> implements BSTreeInterface<E> {
 		if (subRoot == null) {
 			return new Node(data);
 		} else if (data.compareTo(subRoot.data) < 0) {
-			subRoot = subRoot.leftChild;
-			return insertRecursive(subRoot, data);
+			subRoot.leftChild =  insertRecursive(subRoot.leftChild, data);
+		} else {
+			subRoot.rightChild =  insertRecursive(subRoot.rightChild, data);
 		}
-
-		else {
-			subRoot = subRoot.rightChild;
-			return insertRecursive(subRoot, data);
-		}
+		
+		return subRoot;
 
 	}
 
