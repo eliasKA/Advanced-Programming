@@ -1,7 +1,5 @@
 package assignment2;
 
-
-
 public class List<E extends Data<E>> implements ListInterface<E> {
 
 	private int numberOfElement;
@@ -52,8 +50,7 @@ public class List<E extends Data<E>> implements ListInterface<E> {
 
 	@Override
 	public E retrieve() {
-
-		return current.data.clone();
+		return current.data;
 	}
 
 	@Override
