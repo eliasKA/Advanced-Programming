@@ -10,42 +10,57 @@ public class Parser {
 			SYMM_DIFFERENCE = '|', COMPLEMENT = '-', INTERSECTION = '*', START_OF_SET = '{', END_OF_SET = '}',
 			START_COMPLEX_FACTOR = '(', END_COMPLEX_FACTOR = ')', COMMA = ',';
 
-	private static final String EXC_INPUT_ERROR = "Error on input. ", MSG_END_PROGRAM = "~PROGRAM TERMINATED~",
-			EMPTY_STRING = "", SPACE = " ",
+	private static final String EXC_INPUT_ERROR = "Error on input. ", EMPTY_STRING = "", SPACE = " ",
 
 			EXC_EMPTY_INPUT = "Error, empty input-line. ", EXC_ON_CHAR = "Input error at: ",
 			EXC_EXPECTED = "Expected: ", EOLN = "End of line", EXC_INVALID_OPERATOR = "Input error, invalid operator: ",
-			LETTER = "Letter (A-Z,a-z).", NUMBER = "Natural number.", NON_ZERO = "Non-zero digit (1-9).";
+			LETTER = "Letter (A-Z,a-z).", NATURAL_NUMBER = "Natural number.", NON_ZERO = "Non-zero digit (1-9).",
+			EXC_ZERO = "Error: invalid natural number: 0";
+
+	private static final int COMMENT = 0, PRINT = 1, ASSIGN = 2;
 
 	PrintStream out;
 	VariableMap<IdentifierInterface, SetInterface<NumberInterface>> varMap;
+
+	private int currentStatement;
+	private SetInterface<NumberInterface> currentValue;
+	private IdentifierInterface currentKey;
 
 	Parser() {
 		out = new PrintStream(System.out);
 		varMap = new VariableMap<IdentifierInterface, SetInterface<NumberInterface>>();
 	}
 
-	private void start() {
+	private void program() {
 		Scanner in = new Scanner(System.in);
 
 		String inputLine;
 		Scanner lineScanner;
-
+		
 		while (!eof(in)) {
+			inputLine = in.nextLine();
+
+			lineScanner = new Scanner(inputLine);
+			lineScanner.useDelimiter(EMPTY_STRING);
 			try {
-				inputLine = in.nextLine();
-
-				lineScanner = new Scanner(inputLine);
-				lineScanner.useDelimiter(EMPTY_STRING);
-
-				program(lineScanner);
+				statement(lineScanner);
+				executeOperations();
 			} catch (APException e) {
 				out.println(e.getMessage());
 			}
 		}
 
 		in.close();
-		out.println(MSG_END_PROGRAM);
+	}
+
+	private void executeOperations() {
+		if(currentStatement == COMMENT){
+			// do nothing
+		}else if(currentStatement == ASSIGN){
+			varMap.add(currentKey, currentValue);
+		}else if(currentStatement == PRINT){
+			printSet(currentValue);
+		}	
 	}
 
 	boolean eof(Scanner in) {
@@ -76,21 +91,19 @@ public class Parser {
 		return result;
 	}
 
-	private void program(Scanner in) throws APException {
-		if (eof(in)) {
-			throw new APException(EXC_EMPTY_INPUT);
-		}
-		statement(in);
-	}
-
 	private void statement(Scanner in) throws APException {
 		ignoreSpaces(in);
 
-		if (nextCharIs(in, COMMENT_START)) {
+		if (eof(in)) {
+			throw new APException(EXC_EMPTY_INPUT);
+		}else if (nextCharIs(in, COMMENT_START)) {
+			currentStatement = COMMENT;
 			comment(in);
 		} else if (nextCharIs(in, PRINT_STATEMENT_START)) {
+			currentStatement = PRINT;
 			printStatement(in);
 		} else if (nextCharIsLetter(in)) {
+			currentStatement = ASSIGN;
 			assignment(in);
 		} else {
 			throw new APException(EXC_INPUT_ERROR);
@@ -105,12 +118,11 @@ public class Parser {
 	}
 
 	private void assignment(Scanner in) throws APException {
-		Identifier variableIdentifier = identifier(in);
+		currentKey = identifier(in);
 		ignoreSpaces(in);
 		character(in, EQUALS_SIGN);
 		ignoreSpaces(in);
-		SetInterface<NumberInterface> variableValue = expression(in);
-		varMap.add(variableIdentifier, variableValue);
+		currentValue = expression(in);
 		ignoreSpaces(in);
 		eoln(in);
 	}
@@ -118,7 +130,7 @@ public class Parser {
 	private void printStatement(Scanner in) throws APException {
 		character(in, PRINT_STATEMENT_START);
 		ignoreSpaces(in);
-		printSet(expression(in));
+		currentValue = expression(in);
 		ignoreSpaces(in);
 		eoln(in);
 	}
@@ -136,7 +148,7 @@ public class Parser {
 			if (nextCharIsLetter(in)) {
 				buffer.append(letter(in));
 			} else if (nextCharIsNumber(in)) {
-				buffer.append(naturalNumber(in));
+				buffer.append(positiveNumber(in));
 			}
 		}
 
@@ -236,7 +248,7 @@ public class Parser {
 		}
 	}
 
-	private NumberInterface naturalNumber(Scanner in) throws APException {
+	private NumberInterface positiveNumber(Scanner in) throws APException {
 		StringBuffer result = new StringBuffer();
 
 		result.append(notZero(in));
@@ -258,9 +270,9 @@ public class Parser {
 		} else if (nextCharIsNotZero(in)) {
 			return notZero(in);
 		} else if (in.hasNext()) {
-			throw new APException(EXC_ON_CHAR + in.next() + SPACE + EXC_EXPECTED + NUMBER);
+			throw new APException(EXC_ON_CHAR + in.next() + SPACE + EXC_EXPECTED + NATURAL_NUMBER);
 		} else {
-			throw new APException(EXC_INPUT_ERROR + EXC_EXPECTED + NUMBER);
+			throw new APException(EXC_INPUT_ERROR + EXC_EXPECTED + NATURAL_NUMBER);
 		}
 	}
 
@@ -294,14 +306,14 @@ public class Parser {
 			SetInterface<NumberInterface> set2) {
 
 		switch (operator) {
-			case UNION:
-				return set1.union(set2);
-			case INTERSECTION:
-				return set1.intersection(set2);
-			case COMPLEMENT:
-				return set1.complement(set2);
-			case SYMM_DIFFERENCE:
-				return set1.symmetricDifference(set2);
+		case UNION:
+			return set1.union(set2);
+		case INTERSECTION:
+			return set1.intersection(set2);
+		case COMPLEMENT:
+			return set1.complement(set2);
+		case SYMM_DIFFERENCE:
+			return set1.symmetricDifference(set2);
 		}
 
 		return null;
@@ -310,7 +322,7 @@ public class Parser {
 	private SetInterface<NumberInterface> rowOfNaturalNumbers(Scanner in) throws APException {
 		SetInterface<NumberInterface> result = new Set<NumberInterface>();
 
-		if (nextCharIsNumber(in)) {
+		if (nextCharIsNotZero(in) || nextCharIsZero(in)) {
 			result.add(naturalNumber(in));
 			ignoreSpaces(in);
 
@@ -324,6 +336,24 @@ public class Parser {
 		}
 
 		return result;
+	}
+
+	private NumberInterface naturalNumber(Scanner in) throws APException {
+		StringBuffer result = new StringBuffer();
+
+		if (nextCharIsZero(in)) {
+			result.append(nextChar(in));
+			if (nextCharIsNotZero(in) || nextCharIsZero(in)) {
+				throw new APException(EXC_ZERO + nextChar(in));
+			}
+		} else if (nextCharIsNotZero(in)) {
+			result.append(nextChar(in));
+			while (nextCharIsNotZero(in) || nextCharIsZero(in)) {
+				result.append(nextChar(in));
+			}
+		}
+
+		return new Number(result.toString());
 	}
 
 	private boolean hasNextAdditiveOperator(Scanner in) {
@@ -353,7 +383,7 @@ public class Parser {
 	}
 
 	public static void main(String[] args) {
-		new Parser().start();
+		new Parser().program();
 	}
 
 }
