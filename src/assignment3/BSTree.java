@@ -25,14 +25,14 @@ public class BSTree<E extends Data<E>> implements BSTreeInterface<E> {
 	public Iterator<E> ascendingIterator() {
 		list.clear();
 		makeAscending(root);
-		return list.listIterator();
+		return list.iterator();
 	}
 
 	@Override
 	public Iterator<E> descendingIterator() {
 		list.clear();
 		makeDescending(root);
-		return list.listIterator();
+		return list.iterator();
 	}
 
 	private void makeAscending(Node subRoot) {

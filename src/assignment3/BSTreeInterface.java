@@ -44,9 +44,7 @@ public interface BSTreeInterface<E extends Data<E>> extends Clonable<BSTreeInter
 
 	/**
 	 * @precondition -
-	 * @postcondition - A copy of data has been added to Tree-PRE. current
-	 *                points to the newly added element. Tree-POST has been
-	 *                returned.
+	 * @postcondition - A copy of data has been added to Tree-PRE. 
 	 **/
 	BSTreeInterface<E> add(E data);
 
@@ -60,12 +58,9 @@ public interface BSTreeInterface<E extends Data<E>> extends Clonable<BSTreeInter
 
 	/** @precondition  - 
 	 *	@postcondition - TRUE:  Tree contains a copy of d.
-	 *	     			 current-POST points to the first element in tree that
-	 *	     			 contains a copy of d.
+	 *	     			
 	 *     				 FALSE: Tree does not contain a copy of d.
-	 *	     			 current-POST points to
-	 *	      				- if tree-POST is empty
-	 *                    		null
+	 *	     			
 	 *	      				
 	 **/
 	boolean contains(E data);
