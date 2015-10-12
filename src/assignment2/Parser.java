@@ -11,7 +11,6 @@ public class Parser {
 			START_COMPLEX_FACTOR = '(', END_COMPLEX_FACTOR = ')', COMMA = ',';
 
 	private static final String EXC_INPUT_ERROR = "Error on input. ", EMPTY_STRING = "", SPACE = " ",
-
 			EXC_EMPTY_INPUT = "Error, empty input-line. ", EXC_ON_CHAR = "Input error at: ",
 			EXC_EXPECTED = "Expected: ", EOLN = "End of line", EXC_INVALID_OPERATOR = "Input error, invalid operator: ",
 			LETTER = "Letter (A-Z,a-z).", NATURAL_NUMBER = "Natural number.", NON_ZERO = "Non-zero digit (1-9).",
@@ -351,6 +350,8 @@ public class Parser {
 			while (nextCharIsNotZero(in) || nextCharIsZero(in)) {
 				result.append(nextChar(in));
 			}
+		} else{
+			throw new APException(EXC_INPUT_ERROR);
 		}
 
 		return new Number(result.toString());
