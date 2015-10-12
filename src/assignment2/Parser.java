@@ -350,6 +350,8 @@ public class Parser {
 			while (nextCharIsNotZero(in) || nextCharIsZero(in)) {
 				result.append(nextChar(in));
 			}
+		}  else{
+			throw new APException(EXC_INPUT_ERROR);
 		}
 
 		return new Number(result.toString());
