@@ -64,10 +64,7 @@ public class mainTest {
 		}
 		out.println();
 
-		if (!tree.contains(new Identifier("d"),"-i"))
-			out.println("not there");
-		if (tree.contains(new Identifier("a"),"-i"))
-			out.println(" there");
+		
 	}
 
 	static void parseArguments(String[] args) {

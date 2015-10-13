@@ -11,7 +11,7 @@ import java.util.Iterator;
  * @domain : Every parent Node can have a maximum of two children T he elements
  *         in the Tree are sorted so that the left child always greater than the
  *         parent and right child always smaller or equal than the parent. All
- *         elements of type E are valid values for a tree. 
+ *         elements of type E are valid values for a tree. // TODO : subtree
  * 
  * @constructor - BSTree();
  *              <dl>
@@ -62,7 +62,7 @@ public interface BSTreeInterface<E extends Data<E>> extends Clonable<BSTreeInter
 	 *	     			
 	 *	      				
 	 **/
-	boolean contains(E data,String option);
+	boolean contains(E data);
 
 	/**
 	 * @postcondition The data stored in the binary search tree was iterated in

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class CountMap<E extends Data<E>> implements CountMapInterface<E> {
 
-	ArrayList<CountObject> countMap;;
+	public ArrayList<CountObject> countMap;;
 	
 	CountMap(){
 		init();
@@ -41,7 +41,7 @@ public class CountMap<E extends Data<E>> implements CountMapInterface<E> {
 		}
 	}
 	
-	private class CountObject{
+	public class CountObject{
 		
 		E value;
 		int counter;
@@ -66,6 +66,10 @@ public class CountMap<E extends Data<E>> implements CountMapInterface<E> {
 			
 			CountObject countObject = (CountObject)obj;
 			return countObject.value.equals(this.value);
+		}
+		
+		public String toString(){
+			return "counter: " + counter + " identifier: " + value.toString(); 
 		}
 	}
 

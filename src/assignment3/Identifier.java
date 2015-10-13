@@ -20,9 +20,7 @@ public class Identifier implements IdentifierInterface {
 	public int compareTo(IdentifierInterface identifier) {
 		return toString().compareTo(identifier.toString());
 	}
-	public int compareToIgnoreCase(IdentifierInterface identifier) {
-		return toString().compareToIgnoreCase(identifier.toString());
-	}
+	
 
 	@Override
 	public boolean equals(Object obj) {
