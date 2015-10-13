@@ -151,7 +151,7 @@ public class BSTree<E extends Data<E>> implements BSTreeInterface<E> {
 	}
 
 	@Override
-	public boolean contains(E data) {
+	public boolean contains(E data,String option) {
 		return containsRecursive(root, data);
 	}
 

@@ -24,6 +24,7 @@ public class CountMap<E extends Data<E>> implements CountMapInterface<E> {
 			countMap.get(countMap.lastIndexOf(countObject)).increment();
 		}else{
 			countMap.add(countObject);
+			
 		}
 		
 		return this;
@@ -47,7 +48,7 @@ public class CountMap<E extends Data<E>> implements CountMapInterface<E> {
 		
 		CountObject(E value){
 			this.value = value;
-			counter = 0;
+			counter = 1;
 		}
 		
 		void increment(){

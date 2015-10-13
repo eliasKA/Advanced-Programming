@@ -10,6 +10,7 @@ public class Number implements NumberInterface{
 
 	@Override
 	public int compareTo(NumberInterface number) {
+		
 		double x = Double.parseDouble(toString());
 		double y = Double.parseDouble(number.toString());
 		
