@@ -67,10 +67,7 @@ public class BSTree<E extends Data<E>> implements BSTreeInterface<E> {
 		return numberOfElement;
 	}
 
-	private E biggest(Node subRoot) {// je weet maar nooit
-
-		return subRoot.rightChild == null ? subRoot.data : biggest(subRoot.rightChild);
-	}
+	
 
 	private E smallest(Node subRoot) {
 
@@ -92,7 +89,7 @@ public class BSTree<E extends Data<E>> implements BSTreeInterface<E> {
 	}
 
 	private Node removeRecursive(Node subRoot, E data) {
-		if (subRoot == null)// gnawa diffusion
+		if (subRoot == null)
 			return null;
 		else if (data.compareTo(subRoot.data) < 0)
 			subRoot.leftChild = removeRecursive(subRoot.leftChild, data);

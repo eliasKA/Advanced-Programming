@@ -8,9 +8,9 @@ import java.util.Iterator;
  * 
  *         /** @elements : objects of type E
  * @structure : Binary Tree
- * @domain : Every parent Node can have a maximum of two children T he elements
- *         in the Tree are sorted so that the left child always greater than the
- *         parent and right child always smaller or equal than the parent. All
+ * @domain : Every parent Node can have a maximum of two children The elements
+ *         in the Tree are sorted so that the elements in the left subtree is always smaller than the
+ *         parent and the elements of the right subtree  always greater or equal to the parent. All
  *         elements of type E are valid values for a tree. // TODO : subtree
  * 
  * @constructor - BSTree();

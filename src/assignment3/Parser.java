@@ -3,36 +3,27 @@ package assignment3;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.util.Arrays;
+
 import java.util.Iterator;
-import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class Parser {
 
-	//
+	private static final String EXC_INPUT_ERROR = "Error on input. ", EMPTY_STRING = "", EXC_EXPECTED = "Expected: ",
+			LETTER = "Letter (A-Z,a-z).";
 
-	private static final String EXC_INPUT_ERROR = "Error on input. ", EMPTY_STRING = "", SPACE = " ",
-			EXC_EMPTY_INPUT = "Error, empty input-line. ", EXC_ON_CHAR = "Input error at: ",
-			EXC_EXPECTED = "Expected: ", EOLN = "End of line", EXC_INVALID_OPERATOR = "Input error, invalid operator: ",
-			LETTER = "Letter (A-Z,a-z).", NATURAL_NUMBER = "Natural number.", NON_ZERO = "Non-zero digit (1-9).",
-			COMMA = ";", EXC_ZERO = "Error: invalid natural number: 0";
-	//
-
-	private static final String ARGS_INPUT_FORMAT = "Inputformat: [ commandLineOptions ] files", ERROR = "Error: ",
-			DEC_OPTION = "d", CASE_OPTION = "i", ARGUMENT_ERROR = " ";
-	private static final char START_OPTION = '-', BRACKET_OPEN = '[', BRACKET_CLOSE = ']';
+	private static final String ARGS_INPUT_FORMAT = "Inputformat: [ commandLineOptions ] files", DEC_OPTION = "-d",
+			CASE_OPTION = "-i";
 
 	PrintStream out;
-	
+
 	BSTreeInterface<IdentifierInterface> tree;
 	boolean optionCas, optionDec; // Should this be switches?
 
 	Parser() {
 		out = new PrintStream(System.out);
-		
-		tree=new BSTree<IdentifierInterface>();
+
+		tree = new BSTree<IdentifierInterface>();
 		optionCas = optionDec = false;
 	}
 
@@ -45,13 +36,46 @@ public class Parser {
 		}
 	}
 
+	private Iterator<IdentifierInterface> getIterator() {
+		if (optionDec)
+			return tree.descendingIterator();
+		return tree.ascendingIterator();
+	}
+
 	private void printResult() {
-		Iterator<IdentifierInterface> it = tree.ascendingIterator();
-		while(it.hasNext()){
-			out.println(it.next().toString());
+
+		Iterator<IdentifierInterface> iterator = getIterator();
+		if (!iterator.hasNext()) {
+			return;
+		}
+
+		IdentifierInterface previous = iterator.next();
+		IdentifierInterface current;
+
+		int counter = 1;
+
+		while (iterator.hasNext()) {
+			current = iterator.next();
+			if (current.equals(previous)) {
+				counter += 1;
+			} else {
+				if (!isEven(counter)) {
+					out.println(previous);
+				}
+				previous = current;
+				counter = 1;
+			}
+		}
+
+		if (!isEven(counter)) {
+			out.println(previous);
 		}
 	}
-	
+
+	boolean isEven(int number) {
+		return number % 2 == 0;
+	}
+
 	private void parseArguments(String[] args) throws APException {
 		int numberOfFiles = 0;
 		for (int i = 0; i < args.length; i++) {
@@ -69,14 +93,12 @@ public class Parser {
 	}
 
 	private void setOption(String option) {
-		switch (option) {
-		case "-d":
+
+		if (option.equals(DEC_OPTION))
 			optionDec = true;
-			break;
-		case "-i":
+		else if (option.equals(CASE_OPTION))
 			optionCas = true;
-			break;
-		}
+
 	}
 
 	private void readFile(String file) throws APException {
@@ -85,7 +107,7 @@ public class Parser {
 			Scanner fileScanner = new Scanner(new File(file));
 			fileScanner.useDelimiter(EMPTY_STRING);
 			parseFile(fileScanner);
-	
+
 			fileScanner.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to find file '" + file + "'.");
@@ -95,29 +117,27 @@ public class Parser {
 	}
 
 	private void parseFile(Scanner in) throws APException {
-		while(in.hasNext()){
-			if(nextCharIsDelimiter(in)){
+		while (in.hasNext()) {
+			if (nextCharIsDelimiter(in)) {
 				delimiter(in);
-			}else if(nextCharIsDigit(in) || nextCharIsLetter(in)){
+			} else if (nextCharIsDigit(in) || nextCharIsLetter(in)) {
 				variable(in);
 			}
 		}
 
 	}
-	
+
 	private void variable(Scanner in) throws APException {
-		if (nextCharIsLetter(in)){
-			tree.add(identifier(in, optionCas));}
-		else if (nextCharIsDigit(in))
+		if (nextCharIsLetter(in)) {
+			tree.add(identifier(in, optionCas));
+		} else if (nextCharIsDigit(in))
 			nonIdentifier(in);
 	}
-	
-	private void delimiter(Scanner in) throws APException {
-		if (nextCharIsDelimiter(in)) {
+
+	private void delimiter(Scanner in) {
+		if (nextCharIsDelimiter(in))
 			in.next();
-		} else {
-			throw new APException("Delimiter");
-		}
+
 	}
 
 	private void nonIdentifier(Scanner in) throws APException {
@@ -142,7 +162,7 @@ public class Parser {
 			}
 		}
 
-		if(optionCas){
+		if (optionCas) {
 			return new Identifier(buffer.toString().toLowerCase());
 		}
 		return new Identifier(buffer.toString());
