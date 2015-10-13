@@ -1,8 +1,7 @@
 sEBNF for assignment 3:
 
 file 			=  { delimiter | variable } <eof>
-- The file consists of a row of variables, ended with <eof> 
-
+- The file consists variables and delimiters, ended with <eof> 
 
 delimiter		= any character that is NOT a letter or a number; //Q
 - Any non-alphanumeric character 

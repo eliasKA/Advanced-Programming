@@ -49,9 +49,7 @@ public class Parser {
 		Iterator<IdentifierInterface> it = tree.ascendingIterator();
 		while(it.hasNext()){
 			out.println(it.next().toString());
-			
 		}
-
 	}
 	
 	private void parseArguments(String[] args) throws APException {
@@ -68,7 +66,6 @@ public class Parser {
 		if (args.length == 0 || numberOfFiles == 0) {
 			throw new APException(ARGS_INPUT_FORMAT);
 		}
-
 	}
 
 	private void setOption(String option) {
@@ -86,10 +83,10 @@ public class Parser {
 
 		try {
 			Scanner fileScanner = new Scanner(new File(file));
-			out.println(fileScanner.nextLine());
-			
-			//parseFile(fileScanner.useDelimiter(EMPTY_STRING));
-			//fileScanner.close();
+			fileScanner.useDelimiter(EMPTY_STRING);
+			parseFile(fileScanner);
+	
+			fileScanner.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to find file '" + file + "'.");
 			System.exit(1);
@@ -98,40 +95,23 @@ public class Parser {
 	}
 
 	private void parseFile(Scanner in) throws APException {
-		rowOfDelimiters(in);
-		rowOfVariables(in);
-
-	}
-
-	private void rowOfVariables(Scanner in) throws APException {
-		if (nextCharIsLetter(in) || nextCharIsDigit(in)) {
-			variable(in);
-			while (nextCharIsDelimiter(in)) {
-				rowOfDelimiters(in);
-				if (nextCharIsLetter(in) || nextCharIsDigit(in)) {
-					variable(in);
-				}
+		while(in.hasNext()){
+			if(nextCharIsDelimiter(in)){
+				delimiter(in);
+			}else if(nextCharIsDigit(in) || nextCharIsLetter(in)){
+				variable(in);
 			}
-
 		}
 
 	}
 	
 	private void variable(Scanner in) throws APException {
 		if (nextCharIsLetter(in)){
-			//out.println(identifier(in, optionCas).toString());}
 			tree.add(identifier(in, optionCas));}
 		else if (nextCharIsDigit(in))
 			nonIdentifier(in);
 	}
 	
-	private void rowOfDelimiters(Scanner in) throws APException {
-		delimiter(in);
-		while (nextCharIsDelimiter(in)) {
-			delimiter(in);
-		}
-	}
-
 	private void delimiter(Scanner in) throws APException {
 		if (nextCharIsDelimiter(in)) {
 			in.next();
