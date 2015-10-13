@@ -353,7 +353,7 @@ public class Parser {
 		}  else{
 			throw new APException(EXC_INPUT_ERROR);
 		}
-
+		
 		return new Number(result.toString());
 	}
 

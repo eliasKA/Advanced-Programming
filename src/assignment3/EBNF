@@ -1,0 +1,29 @@
+EBNF for assignment 3:
+
+file 			= rowOfVariables <eof>
+- The file consists of a row of variables, ended with <eof> 
+
+rowOfVariables 	= [ variable {rowOfDelimiters variable} ] [rowOfDelimiters]; //Q
+- A row of one or more variables, seperated by rows of delimiters
+
+rowOfDelemiters = delimiter {delimiter};
+- A row of one or more delimiters
+
+delimiter		= any character that is NOT a letter or a number; //Q
+- Any non-alphanumeric character 
+
+variable 		= identifier | non-identifier;
+- Either an identifier or a non-identifier
+
+identifier		= letter {letter|digit};
+- A row of one or more letters or/and numbers, starting with a letter
+
+non-identifier	= digit {letter|digit};
+- A row of one or more letters or/and numbers, starting with a number
+
+number			=  '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' ;
+- Any digit from 0 to 9
+
+letter			= 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z' |'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k' | 'l' | 'm' |'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x' | 'y' | 'z' ;
+- A letter is a capital letter or a small letter.
+
