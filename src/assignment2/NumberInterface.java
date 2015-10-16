@@ -52,5 +52,12 @@ public interface NumberInterface extends Data<NumberInterface> {
 	 * @postcondition String representation of the Number object is printed
 	 **/
 	String toString();
+	
+	/**
+	 * @return int representation of the Number object
+	 * @preconditions -
+	 * @postcondition int representation of the Number object is printed
+	 **/
+	int toInt();
 
 }

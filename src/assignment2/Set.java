@@ -131,4 +131,43 @@ public class Set<E extends Data<E>> implements SetInterface<E> {
 
 		return result;
 	}
+
+	@Override
+	public boolean smallerThan(SetInterface<E> set) {
+		SetInterface<E> parClone = set.clone();
+		SetInterface<E> thisClone = this.clone();
+		
+		if(thisClone.size()>= parClone.size()){
+			return false;
+		}
+		
+		for(int i = 0; i < size(); i++){
+			if(!parClone.contains(thisClone.getElement())){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean biggerThan(SetInterface<E> set) {
+		return set.smallerThan(this);
+	}
+
+	@Override
+	public boolean equals(SetInterface<E> set) {
+		SetInterface<E> clone = set.clone();
+		
+		if(clone.size()!=size()){
+			return false;
+		}
+		
+		for(int i = 0; i < clone.size(); i++){
+			if(!contains(clone.getElement())){
+				return false;
+			}
+		}
+		
+		return true;
+	}
 }

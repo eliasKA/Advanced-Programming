@@ -43,4 +43,9 @@ public class Number implements NumberInterface{
 	public String toString(){
 		return numberString;
 	}
+
+	@Override
+	public int toInt() {
+		return Integer.parseInt(numberString);
+	}
 }

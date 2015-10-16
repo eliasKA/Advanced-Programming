@@ -8,13 +8,15 @@ public class Parser {
 
 	private static final char PRINT_STATEMENT_START = '?', COMMENT_START = '/', EQUALS_SIGN = '=', UNION = '+',
 			SYMM_DIFFERENCE = '|', COMPLEMENT = '-', INTERSECTION = '*', START_OF_SET = '{', END_OF_SET = '}',
-			START_COMPLEX_FACTOR = '(', END_COMPLEX_FACTOR = ')', COMMA = ',';
+			START_COMPLEX_FACTOR = '(', END_COMPLEX_FACTOR = ')', DOT = '.', COMMA = ',', BIGGER_THAN = '>',
+			SMALLER_THAN = '<', EQUALS = '=';
 
 	private static final String EXC_INPUT_ERROR = "Error on input. ", EMPTY_STRING = "", SPACE = " ",
 			EXC_EMPTY_INPUT = "Error, empty input-line. ", EXC_ON_CHAR = "Input error at: ",
 			EXC_EXPECTED = "Expected: ", EOLN = "End of line", EXC_INVALID_OPERATOR = "Input error, invalid operator: ",
 			LETTER = "Letter (A-Z,a-z).", NATURAL_NUMBER = "Natural number.", NON_ZERO = "Non-zero digit (1-9).",
-			EXC_ZERO = "Error: invalid natural number: 0";
+			EXC_ZERO = "Error: invalid natural number: 0", EXC_BOOLEAN_OPERATOR = "Invalid boolean operator", IF = "if",
+			THEN = "then", ELSE = "else", RANGE = "..";
 
 	private static final int COMMENT = 0, PRINT = 1, ASSIGN = 2;
 
@@ -35,7 +37,7 @@ public class Parser {
 
 		String inputLine;
 		Scanner lineScanner;
-		
+
 		while (!eof(in)) {
 			inputLine = in.nextLine();
 
@@ -53,13 +55,13 @@ public class Parser {
 	}
 
 	private void executeOperations() {
-		if(currentStatement == COMMENT){
+		if (currentStatement == COMMENT) {
 			// do nothing
-		}else if(currentStatement == ASSIGN){
+		} else if (currentStatement == ASSIGN) {
 			varMap.add(currentKey, currentValue);
-		}else if(currentStatement == PRINT){
+		} else if (currentStatement == PRINT) {
 			printSet(currentValue);
-		}	
+		}
 	}
 
 	boolean eof(Scanner in) {
@@ -95,7 +97,7 @@ public class Parser {
 
 		if (eof(in)) {
 			throw new APException(EXC_EMPTY_INPUT);
-		}else if (nextCharIs(in, COMMENT_START)) {
+		} else if (nextCharIs(in, COMMENT_START)) {
 			currentStatement = COMMENT;
 			comment(in);
 		} else if (nextCharIs(in, PRINT_STATEMENT_START)) {
@@ -134,6 +136,60 @@ public class Parser {
 		eoln(in);
 	}
 
+	private SetInterface<NumberInterface> expression(Scanner in) throws APException {
+		if (nextCharIs(in, '%')) {
+			return ifExpression(in);
+		} else {
+			return subExpression(in);
+		}
+	}
+
+	private SetInterface<NumberInterface> ifExpression(Scanner in) throws APException {
+		character(in, '%');
+		word(in, IF);
+
+		SetInterface<NumberInterface> result1, result2;
+		boolean resultBoolean = booleanExpression(in);
+
+		word(in, THEN);
+
+		result1 = complexFactor(in);
+
+		word(in, ELSE);
+
+		result2 = complexFactor(in);
+
+		if (resultBoolean) {
+			return result1;
+		} else {
+			return result2;
+		}
+	}
+
+	private boolean booleanExpression(Scanner in) throws APException {
+		character(in, START_COMPLEX_FACTOR);
+		SetInterface<NumberInterface> set1 = expression(in);
+		char operator = nextChar(in);
+		SetInterface<NumberInterface> set2 = expression(in);
+		character(in, END_COMPLEX_FACTOR);
+
+		return doBooleanOperations(set1, set2, operator);
+	}
+
+	private boolean doBooleanOperations(SetInterface<NumberInterface> set1, SetInterface<NumberInterface> set2,
+			char operator) throws APException {
+		switch (operator) {
+		case EQUALS:
+			return set1.equals(set2);
+		case SMALLER_THAN:
+			return set1.smallerThan(set2);
+		case BIGGER_THAN:
+			return set1.biggerThan(set2);
+		default:
+			throw new APException(EXC_BOOLEAN_OPERATOR);
+		}
+	}
+
 	private void eoln(Scanner in) throws APException {
 		if (in.hasNext()) {
 			throw new APException(EXC_ON_CHAR + in.next() + SPACE + EXC_EXPECTED + EOLN);
@@ -154,7 +210,7 @@ public class Parser {
 		return new Identifier(buffer.toString());
 	}
 
-	private SetInterface<NumberInterface> expression(Scanner in) throws APException {
+	private SetInterface<NumberInterface> subExpression(Scanner in) throws APException {
 		char operator;
 		SetInterface<NumberInterface> result, set2;
 
@@ -320,17 +376,29 @@ public class Parser {
 
 	private SetInterface<NumberInterface> rowOfNaturalNumbers(Scanner in) throws APException {
 		SetInterface<NumberInterface> result = new Set<NumberInterface>();
+		NumberInterface startNumber, endNumber;
 
 		if (nextCharIsNotZero(in) || nextCharIsZero(in)) {
-			result.add(naturalNumber(in));
+			startNumber = naturalNumber(in);
+			result.add(startNumber);
 			ignoreSpaces(in);
 
-			while (nextCharIs(in, COMMA)) {
-				character(in, COMMA);
-				ignoreSpaces(in);
+			while (!nextCharIs(in, END_OF_SET)) {
+				if (nextCharIs(in, COMMA)) {
+					character(in, COMMA);
+					ignoreSpaces(in);
 
-				result.add(naturalNumber(in));
-				ignoreSpaces(in);
+					startNumber = naturalNumber(in);
+					result.add(startNumber);
+					ignoreSpaces(in);
+				} else if (nextCharIs(in, DOT)) {
+					word(in, RANGE);
+					endNumber = naturalNumber(in);
+					result.remove(startNumber);
+					for (int i = startNumber.toInt(); i < endNumber.toInt() + 1; i += 1) {
+						result.add(new Number(Integer.toString(i)));
+					}
+				}
 			}
 		}
 
@@ -350,10 +418,10 @@ public class Parser {
 			while (nextCharIsNotZero(in) || nextCharIsZero(in)) {
 				result.append(nextChar(in));
 			}
-		}  else{
+		} else {
 			throw new APException(EXC_INPUT_ERROR);
 		}
-		
+
 		return new Number(result.toString());
 	}
 
@@ -373,6 +441,13 @@ public class Parser {
 		} else {
 			return nextChar(in);
 		}
+	}
+
+	private void word(Scanner in, String str) throws APException {
+		for (int i = 0; i < str.length(); i++) {
+			character(in, str.charAt(i));
+		}
+
 	}
 
 	private char nextChar(Scanner in) {

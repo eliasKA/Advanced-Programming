@@ -15,7 +15,7 @@ package assignment2;
  *
  **/
 
-public interface SetInterface<E extends Data<E>> extends Clonable<SetInterface<E>> {
+public interface SetInterface<E extends Data<E>> extends Clonable<SetInterface<E>>{
 
 	/**
 	 * Initializes the set object to the empty set
@@ -129,4 +129,43 @@ public interface SetInterface<E extends Data<E>> extends Clonable<SetInterface<E
 	 * 
 	 */
 	SetInterface<E> complement(SetInterface<E> set);
+	
+	// Bonus Assignment methods
+	
+	/**
+	 * Returns whether the current set is smaller than the parameter set. 
+	 * 
+	 * @precondition -
+	 * @postcondition 
+	 * TRUE: current Set is smaller than parameter set
+	 * FALSE: current Set is bigger or equal to the parameter set 
+	 * 
+	 */
+	boolean smallerThan(SetInterface<E> set);
+	
+	/**
+	 * Returns whether the current set is bigger than the parameter set. 
+	 * 
+	 * @precondition -
+	 * @postcondition 
+	 * TRUE: current Set is bigger than parameter set
+	 * FALSE: current Set is smaller or equal to the parameter set 
+	 * 
+	 */
+	boolean biggerThan(SetInterface<E> set);
+	
+	/**
+	 * Returns whether the current set is equal to the parameter set. 
+	 * 
+	 * @precondition -
+	 * @postcondition 
+	 * TRUE: current Set is equal to parameter set
+	 * FALSE: current Set is smaller or bigger than parameter set 
+	 * 
+	 */
+	boolean equals(SetInterface<E> set);
+	
+	
+	
+	
 }
