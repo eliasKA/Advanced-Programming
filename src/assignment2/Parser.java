@@ -398,6 +398,8 @@ public class Parser {
 					for (int i = startNumber.toInt(); i < endNumber.toInt() + 1; i += 1) {
 						result.add(new Number(Integer.toString(i)));
 					}
+				}else{
+					throw new APException(EXC_INPUT_ERROR + SPACE + EXC_EXPECTED + END_OF_SET);
 				}
 			}
 		}
